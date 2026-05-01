@@ -1,0 +1,215 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Main Navbar */
+.navbar {
+	background-color: black;
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.nav-container {
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 0 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 70px;
+}
+
+/* Logo */
+.logo {
+	font-size: 28px;
+	font-weight: bold;
+	color: rgb(149, 219, 9);
+	text-decoration: none;
+	font-family: cursive;
+}
+
+/* Main Navigation */
+.nav-menu {
+	display: flex;
+	list-style: none;
+	gap: 30px;
+	align-items: center;
+}
+
+.nav-link {
+	color: white;
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 16px;
+	padding: 10px 0;
+	position: relative;
+	transition: all 0.3s ease;
+}
+
+.nav-link::after {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 3px;
+	bottom: 0;
+	left: 50%;
+	background: greenyellow;
+	transition: all 0.3s ease;
+}
+
+.nav-link:hover::after {
+	width: 100%;
+	left: 0;
+}
+
+/* Search Bar */
+.search-container {
+	position: relative;
+	margin: 0 20px;
+}
+
+.search-input {
+	padding: 12px 20px 12px 45px;
+	border: none;
+	border-radius: 25px;
+	width: 300px;
+	font-size: 14px;
+	outline: none;
+	background: rgba(255, 255, 255, 0.9);
+	transition: all 0.3s ease;
+}
+
+.search-input:focus {
+	border-color: blueviolet;
+	box-shadow: 0 0 12px blueviolet;
+}
+
+.search-icon {
+	position: absolute;
+	left: 15px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #666;
+}
+
+/* Right Side Icons */
+.right-icons {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+}
+
+.icon-btn {
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.1);
+	border: none;
+	color: #fff;
+	font-size: 18px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+	position: relative;
+}
+
+.icon-btn:hover {
+	background: rgba(255, 255, 255, 0.2);
+	transform: scale(1.1);
+}
+
+/* Auth Buttons */
+.auth-buttons {
+	display: flex;
+	gap: 10px;
+}
+
+.auth-btn {
+	padding: 9px 20px;
+	border: none;
+	border-radius: 8px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+.login-btn {
+	background: rgba(255, 255, 255, 0.2);
+	color: #fff;
+}
+
+.login-btn:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.register-btn {
+	background: #1e3c72;
+	color: white;
+}
+
+.register-btn:hover {
+	background: #192f57;
+}
+
+/* Sub Navbar */
+.sub-navbar {
+	background: #222;
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.sub-nav-container {
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 0 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+}
+
+.sub-nav-menu {
+	display: flex;
+	list-style: none;
+	gap: 40px;
+}
+
+.sub-nav-link {
+	color: white;
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 15px;
+	padding: 10px 15px;
+	border-radius: 5px;
+	position: relative;
+	transition: all 0.3s ease;
+}
+
+.sub-nav-link::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	bottom: 5px;
+	width: 0;
+	height: 2px;
+	background: yellowgreen;
+	transition: 0.3s;
+	transform: translateX(-50%);
+}
+
+.sub-nav-link:hover::after {
+	width: 80%;
+}

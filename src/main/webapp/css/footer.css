@@ -1,0 +1,143 @@
+@charset "UTF-8";
+/* FOOTER STYLES */
+.main-footer {
+	background-color: #111;
+	color: #fff;
+	padding: 60px 0 20px;
+	font-family: 'Segoe UI', sans-serif;
+	margin-top: 50px;
+}
+
+.footer-container {
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 0 20px;
+	display: grid;
+	grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+	gap: 40px;
+}
+
+.footer-heading {
+	color: #95db09;
+	font-size: 18px;
+	font-weight: 700;
+	margin-bottom: 25px;
+	letter-spacing: 1px;
+}
+
+.footer-about p {
+	color: #bbb;
+	line-height: 1.6;
+	font-size: 14px;
+	margin-bottom: 20px;
+}
+
+.footer-links ul {
+	list-style: none;
+}
+
+.footer-links li {
+	margin-bottom: 12px;
+}
+
+.footer-links a {
+	color: #bbb;
+	text-decoration: none;
+	font-size: 14px;
+	transition: 0.3s;
+}
+
+.footer-links a:hover {
+	color: #95db09;
+	padding-left: 5px;
+}
+
+/* Newsletter Section */
+.newsletter-form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.newsletter-form input {
+	padding: 12px;
+	border-radius: 5px;
+	border: none;
+	outline: none;
+	background: #222;
+	color: white;
+}
+
+.newsletter-btn {
+	padding: 12px;
+	background-color: #95db09;
+	color: #000;
+	border: none;
+	border-radius: 5px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.newsletter-btn:hover {
+	background-color: #fff;
+}
+
+/* Social Icons */
+.social-icons {
+	display: flex;
+	gap: 15px;
+	margin-top: 20px;
+}
+
+.social-icons a {
+	width: 35px;
+	height: 35px;
+	background: #222;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	border-radius: 50%;
+	color: #fff;
+	transition: 0.3s;
+}
+
+.social-icons a:hover {
+	background: #95db09;
+	color: #000;
+}
+
+/* Bottom Bar */
+.footer-bottom {
+	border-top: 1px solid #222;
+	margin-top: 50px;
+	padding-top: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.copyright {
+	color: #777;
+	font-size: 13px;
+}
+
+/* Responsive Footer */
+@media ( max-width : 992px) {
+	.footer-container {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media ( max-width : 500px) {
+	.footer-container {
+		grid-template-columns: 1fr;
+	}
+	.footer-bottom {
+		flex-direction: column;
+		text-align: center;
+	}
+}
