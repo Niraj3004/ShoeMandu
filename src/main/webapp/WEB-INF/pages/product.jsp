@@ -1,437 +1,149 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Product Collection</title>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/product.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/header.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/footer.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Products - Shoesmandu</title>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/css/product.css">
+
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/css/header.css">
+
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/css/footer.css">
 </head>
+
 <body>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="header.jsp"/>
 
+<!--  BANNER  -->
 <div class="offer-banner">
+    <img src="${pageContext.request.contextPath}/resources/images/banner/image1.webp"
+         class="slide-bg">
+</div>
 
-    <div class="offer-slide">
-        <img src="${pageContext.request.contextPath}/resources/images/banner/image1.webp" class="slide-bg">
-        <div class="offer-content">
-            <div class="offer-badge">NEW ARRIVALS</div>
-            <h2 class="offer-title">Air Max Collection</h2>
-            <p class="offer-subtitle">Latest styles just dropped - Get yours before they're gone!</p>
-            <a href="#" class="offer-cta">Explore Collection</a>
+<!--  MAIN CONTAINER  -->
+<div class="container">
+
+    <!--  FILTER -->
+    <div class="filter-sidebar">
+
+        <form action="${pageContext.request.contextPath}/product" method="get">
+
+            <h4>Category</h4>
+            <button name="category" value="Sneakers" type="submit">Sneakers</button>
+            <button name="category" value="Boots" type="submit">Boots</button>
+            <button name="category" value="Casual" type="submit">Casual</button>
+            <button name="category" value="Formal" type="submit">Formal</button>
+
+            <h4>Brand</h4>
+            <button name="brand" value="Nike" type="submit">Nike</button>
+            <button name="brand" value="Adidas" type="submit">Adidas</button>
+            <button name="brand" value="Puma" type="submit">Puma</button>
+
+            <h4>Price</h4>
+            <button name="minPrice" value="0" type="submit">Under 5K</button>
+            <button name="minPrice" value="5000" type="submit">5K+</button>
+            <button name="minPrice" value="10000" type="submit">10K+</button>
+
+            <input type="hidden" name="maxPrice" value="1000000">
+
+            <a href="${pageContext.request.contextPath}/product"
+               class="clear-btn">Clear All</a>
+
+        </form>
+
+    </div>
+
+    <!--  PRODUCTS  -->
+    <div class="products-section">
+
+        <div class="products-header">
+            <h3>
+                <c:choose>
+                    <c:when test="${not empty products}">
+                        ${products.size()} Products Found
+                    </c:when>
+                    <c:otherwise>
+                        No Products Found
+                    </c:otherwise>
+                </c:choose>
+            </h3>
         </div>
-    </div>
 
-    <div class="offer-slide">
-        <img src="${pageContext.request.contextPath}/resources/images/about/header.jpg" class="slide-bg">
-        <div class="offer-content">
-            <div class="offer-badge">NEW ARRIVALS</div>
-            <h2 class="offer-title">Nike Collection</h2>
-            <p class="offer-subtitle">Latest styles just dropped - Get yours before they're gone!</p>
-            <a href="#" class="offer-cta">Explore Collection</a>
+        <div class="products-grid">
+
+            <c:forEach var="p" items="${products}">
+
+                <div class="product-card">
+
+                    <!-- IMAGE -->
+                    <div class="product-image">
+
+                        <img src="${pageContext.request.contextPath}/${p.imageUrl}"
+                             alt="${p.productName}">
+
+                        <!-- WISHLIST -->
+                        <form action="${pageContext.request.contextPath}/add-to-wishlist"
+                              method="post" class="wishlist-form">
+
+                            <input type="hidden" name="productId" value="${p.productId}">
+
+                            <button type="submit" class="favorite">
+                                <i class="fa fa-heart"></i>
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- INFO -->
+                    <div class="product-info">
+
+                        <h3>${p.productName}</h3>
+
+                        <p>${p.brand} | ${p.category}</p>
+
+                        <div class="price">Rs ${p.price}</div>
+
+                        <p class="stock">Stock: ${p.stock}</p>
+
+                        <!-- ADD TO CART -->
+                        <form action="${pageContext.request.contextPath}/add-to-cart"
+                              method="post">
+
+                            <input type="hidden" name="productId" value="${p.productId}">
+
+                            <button type="submit" class="product-btn">
+                                <i class="fa fa-shopping-cart"></i> Add to Cart
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </c:forEach>
+
         </div>
-    </div>
 
-    <div class="offer-slide">
-        <img src="https://i.pinimg.com/1200x/1d/68/cc/1d68cc9d539624871427d5d022112d02.jpg" class="slide-bg">
-        <div class="offer-content">
-            <div class="offer-badge">FREE SHIPPING</div>
-            <h2 class="offer-title">Boots Season</h2>
-            <p class="offer-subtitle">Premium boots with free shipping on orders over $100</p>
-            <a href="#" class="offer-cta">Shop Boots</a>
-        </div>
     </div>
-    
-
-    <div class="offer-nav">
-        <div class="nav-dot active" data-slide="0"></div>
-        <div class="nav-dot" data-slide="1"></div>
-        <div class="nav-dot" data-slide="2"></div>
-    </div>
-    
-    <script src="${pageContext.request.contextPath}/js/productbanner.js"></script>
 
 </div>
 
-    <div class="container">
-        <!-- Filter Slidebar -->
-        <div class="filter-sidebar">
-            <div class="filter-group">
-                <h4>Category</h4>
-                <label class="filter-option">
-                    <input type="checkbox"> Sneakers
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox"> Boots
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox"> Loafers
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox"> Sandals
-                </label>
-            </div>
+<jsp:include page="footer.jsp"/>
 
-            <div class="filter-group">
-                <h4>Brand</h4>
-                <label class="filter-option">
-                    <input type="checkbox"> Nike
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox"> Adidas
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox"> Puma
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox"> New Balance
-                </label>
-            </div>
-
-            <div class="filter-group">
-                <h4>Size</h4>
-                <label class="filter-option">
-                    <input type="checkbox"> 7
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox"> 8
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox"> 9
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox"> 10
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox"> 11
-                </label>
-            </div>
-
-            <div class="filter-group">
-                <h4>Price Range</h4>
-                <div class="price-range">
-                    <div class="price-inputs">
-                        <input type="number" placeholder="Rs 1500-10000" value="">
-                    </div>
-                </div>
-            </div>
-
-            <button class="clear-btn">Clear All</button>
-            <button class="apply-btn">Apply Filters</button>
-        </div>
-
-        <!-- Products Section -->
-        <div class="products-section">
-            <div class="products-header">
-                <div class="products-count">Showing 1-12 of 48 products</div>
-                <select class="sort-select">
-                    <option>Sort by: Featured</option>
-                    <option>Price: Low to High</option>
-                    <option>Price: High to Low</option>
-                    <option>Newest</option>
-                </select>
-            </div>
-            
-            
-
-            <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://i.pinimg.com/1200x/5b/2f/01/5b2f016854f90bb89c30ae7c1c5f6be3.jpg" alt="Sneaker 4">
-                        <span class="favorite">&#10084;</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>Stepora Sneaker 4</h3>
-                        <div class="price">
-                            <span class="offer-price">$85</span>
-                            <span class="original-price">$115</span>
-                        </div>
-                        <div class="rating">
-                            ★★★★☆
-                        </div>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- More product cards with different images -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" alt="Sneaker 1">
-                        <span class="favorite">&#10084;</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>Air Max Pro</h3>
-                        <div class="price">
-                            <span class="offer-price">$129</span>
-                            <span class="original-price">$169</span>
-                        </div>
-                        <div class="rating">★★★★★</div>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=400" alt="Sneaker 2">
-                        <span class="favorite">&#10084;</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>Classic Runner</h3>
-                        <div class="price">
-                            <span class="offer-price">$95</span>
-                            <span class="original-price">$130</span>
-                        </div>
-                        <div class="rating">★★★★☆</div>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400" alt="Sneaker 3">
-                        <span class="favorite">&#10084;</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>Urban Hiker</h3>
-                        <div class="price">
-                            <span class="offer-price">$75</span>
-                            <span class="original-price">$105</span>
-                        </div>
-                        <div class="rating">★★★★☆</div>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1543163528-9ca289720b04?w=400" alt="Sneaker 5">
-                        <span class="favorite">&#10084;</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>Sport Elite</h3>
-                        <div class="price">
-                            <span class="offer-price">$145</span>
-                            <span class="original-price">$195</span>
-                        </div>
-                        <div class="rating">★★★★★</div>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
-                </div>
-                
-                  <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1543163528-9ca289720b04?w=400" alt="Sneaker 5">
-                        <span class="favorite">&#10084;</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>Sport Elite</h3>
-                        <div class="price">
-                            <span class="offer-price">$145</span>
-                            <span class="original-price">$195</span>
-                        </div>
-                        <div class="rating">★★★★★</div>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
-                </div>
-                
-                  <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1543163528-9ca289720b04?w=400" alt="Sneaker 5">
-                        <span class="favorite">&#10084;</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>Sport Elite</h3>
-                        <div class="price">
-                            <span class="offer-price">$145</span>
-                            <span class="original-price">$195</span>
-                        </div>
-                        <div class="rating">★★★★★</div>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
-                </div>
-                
-                  <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1543163528-9ca289720b04?w=400" alt="Sneaker 5">
-                        <span class="favorite">&#10084;</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>Sport Elite</h3>
-                        <div class="price">
-                            <span class="offer-price">$145</span>
-                            <span class="original-price">$195</span>
-                        </div>
-                        <div class="rating">★★★★★</div>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
-                </div>
-                
-                  <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1543163528-9ca289720b04?w=400" alt="Sneaker 5">
-                        <span class="favorite">&#10084;</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>Sport Elite</h3>
-                        <div class="price">
-                            <span class="offer-price">$145</span>
-                            <span class="original-price">$195</span>
-                        </div>
-                        <div class="rating">★★★★★</div>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
-                </div>
-                
-                  <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1543163528-9ca289720b04?w=400" alt="Sneaker 5">
-                        <span class="favorite">&#10084;</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>Sport Elite</h3>
-                        <div class="price">
-                            <span class="offer-price">$145</span>
-                            <span class="original-price">$195</span>
-                        </div>
-                        <div class="rating">★★★★★</div>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/resources/images/home/744-Sky-Female1.jpg" alt="Sneaker 1">
-
-                </div>
-                <div class="product-info">
-                    <h3>744-Sky-Female1</h3>
-                    <div class="price">
-                        <span class="offer-price">Rs 800</span>
-                        <span class="original-price">Rs 120</span>
-                    </div>
-                    <div class="rating">
-                        ★★★★☆
-                    </div>
-                    <button class="product-btn">Add to Cart</button>
-                </div>
-            </div>
-                
-            </div>
-            
-            
-            
-            
-            <section class="home-products">
-        <h2 class="section-title">New Arrivals</h2>
-        <div class="product-container">
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/resources/images/home/744-Sky-Female1.jpg" alt="Sneaker 1">
-
-                </div>
-                <div class="product-info">
-                    <h3>744-Sky-Female1</h3>
-                    <div class="price">
-                        <span class="offer-price">Rs 800</span>
-                        <span class="original-price">Rs 120</span>
-                    </div>
-                    <div class="rating">
-                        ★★★★☆
-                    </div>
-                    <button class="product-btn">Add to Cart</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/resources/images/home/745-Blush-4.jpg" alt="Sneaker 2">
-                   
-                </div>
-                <div class="product-info">
-                    <h3>745-Blush-4</h3>
-                    <div class="price">
-                        <span class="offer-price">Rs 700</span>
-                        <span class="original-price">Rs 100</span>
-                    </div>
-                    <div class="rating">
-                        ★★★★☆    
-                    </div>
-                    <button class="product-btn">Add to Cart</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/resources/images/home/746-sky-uni2.jpg" alt="Sneaker 3">
-                   
-                </div>
-                <div class="product-info">
-                    <h3>746-sky-uni2</h3>
-                    <div class="price">
-                        <span class="offer-price">Rs 900</span>
-                        <span class="original-price">Rs 130</span>
-                    </div>
-                    <div class="rating">
-                        ★★★★☆
-                    </div>
-                    <button class="product-btn">Add to Cart</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/resources/images/home/746-white4.jpg" alt="Sneaker 4">
-                 
-                </div>
-                <div class="product-info">
-                    <h3>746-white4</h3>
-                    <div class="price">
-                        <span class="offer-price">Rs 850</span>
-                        <span class="original-price">Rs 115</span>
-                    </div>
-                    <div class="rating">
-                        ★★★★☆
-                    </div>
-                    <button class="product-btn">Add to Cart</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/resources/images/home/563G-Julio-White-1.jpg" alt="Sneaker 4">
-                   
-                </div>
-                <div class="product-info">
-                    <h3>563G-Julio-White-1</h3>
-                    <div class="price">
-                        <span class="offer-price">Rs 950</span>
-                        <span class="original-price">Rs 115</span>
-                    </div>
-                    <div class="rating">
-                        ★★★★☆
-                    </div>
-                    <button class="product-btn">Add to Cart</button>
-                </div>
-            </div>
-
-        </div>
-    </section>
-            
-            
-            
-            
-            
-            
-            
-            
-        </div>
-    </div>
-    
-     <jsp:include page="footer.jsp" />
 </body>
 </html>

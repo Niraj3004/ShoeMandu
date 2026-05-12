@@ -10,9 +10,9 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/AboutUs.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/header.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/footer.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/AboutUs.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/footer.css" />
     
 </head>
 
@@ -20,32 +20,30 @@
 
 <jsp:include page="header.jsp" />
 
-    <section class="about-banner">
-        <img src="https://images.unsplash.com/photo-1596744288358-45428ce99fc4?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="About Banner">
 
-        <div class="about-banner-content">
-            <h1>About Our Brand</h1>
-            <p>Premium quality shoes crafted with passion since 2026</p>
-        </div>
-    </section>
+ <header class="about-header">
+      <h1>Our Story</h1>
+      <p>A Legacy of Excellence Since 1920</p>
+    </header>
 
+   
     <div class="content-container">
 
         <section class="section-spacing">
 
             <div class="about-story">
                 <div class="about-story-image">
-                    <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=900&h=700&fit=crop" alt="">
+                    <img src="${pageContext.request.contextPath}/resources/images/home/745-Blush-4.jpg" alt="Sneaker 2">
                 </div>
 
                 <div class="about-story-text">
                     <h3>From Passion to Perfection</h3>
                     <p>Founded in 2026 by sneaker enthusiasts, we started with a simple vision: to create the world's
-                        finest shoes that combine style, comfort, and durability. Today, we're proud to serve thousands
-                        of customers worldwide with our premium collections.</p>
+                        finest shoes that combine style, comfort, and durability.  <p>Today, we're proud to serve thousands
+                        of customers worldwide with our premium collections.</p></p>
                     <p>very pair is crafted with premium materials and meticulous attention to detail in our
                         state-of-the-art facilities. We believe quality should never be compromised.</p>
-                    <a href="#" class="primary-button">Explore Collection</a>
+                    <a href="#" class="primary-buttonnn">Explore Collection</a>
                 </div>
             </div>
 
@@ -160,7 +158,7 @@
         <section class="about-action">
             <h2>Experience Premium Comfort</h2>
             <p>Discover footwear designed for your lifestyle.</p>
-            <a href="#" class="primary-button">Shop Now</a>
+            <a href="#" class="primary-buttonnn">Shop Now</a>
         </section>
 
     </div>

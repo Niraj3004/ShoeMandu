@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,73 +13,91 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="/main.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/header.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/footer.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/home.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/header.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/footer.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/home.css" />
 </head>
+
+	<c:if test="${not empty sessionScope.error}">
+    <div class="alert error">${sessionScope.error}</div>
+    <c:remove var="error" scope="session"/>
+</c:if>
+
+<c:if test="${not empty sessionScope.success}">
+    <div class="alert success">${sessionScope.success}</div>
+    <c:remove var="success" scope="session"/>
+</c:if>
 
 <body>
  <jsp:include page="header.jsp" />
 
-	<div class="slider-container">
+	<!-- HOME SLIDER -->
+<section class="home-slider">
 
-    <!-- Slide 1 -->
+    <!-- SLIDE 1 -->
     <div class="slide active">
-        <img src="https://i.pinimg.com/1200x/9b/57/e4/9b57e4b9e434c19e5da74109fab2f861.jpg" alt="Shoes Mandu">
-        <div class="overlay"></div>
         <div class="slide-content">
-            <h1>Shoes Mandu</h1>
-            <p>Premium footwear for comfort and style</p>
-            <a href="#" class="cta-button">Shop Now</a>
+            <h1>Step Into Style</h1>
+            <p>Discover premium sneakers and sports shoes only at Shoesmandu.</p>
+
+            <div class="slider-buttons">
+                <a href="#" class="shop-btn">Shop Now</a>
+                <a href="#" class="explore-btn">Explore</a>
+            </div>
+        </div>
+
+        <div class="slide-image">
+            <img src="${pageContext.request.contextPath}/resources/images/home/744-Sky-Female1.jpg" alt="Sneaker 1"
+                alt="Nike Shoe">
         </div>
     </div>
 
-    <!-- Slide 2 -->
+    <!-- SLIDE 2 -->
     <div class="slide">
-        <img src="https://i.pinimg.com/1200x/d1/fc/2d/d1fc2d40b233591a3c1c179907471eb5.jpg" alt="Sneakers">
-        <div class="overlay"></div>
         <div class="slide-content">
-            <h1>Sneaker Collection</h1>
-            <p>Latest trendy sneakers</p>
-            <a href="#" class="cta-button">Explore</a>
+            <h1>Run With Confidence</h1>
+            <p>Comfort meets performance with our newest running collection.</p>
+
+            <div class="slider-buttons">
+                <a href="#" class="shop-btn">Buy Now</a>
+                <a href="#" class="explore-btn">View Collection</a>
+            </div>
+        </div>
+
+        <div class="slide-image">
+            <img src="${pageContext.request.contextPath}/resources/images/home/746-white4.jpg" alt="Sneaker 4"
+                alt="Running Shoe">
         </div>
     </div>
 
-    <!-- Slide 3 -->
+    <!-- SLIDE 3 -->
     <div class="slide">
-        <img src="https://i.pinimg.com/1200x/5e/ae/16/5eae167e6a8a150e611e7da3e5c71872.jpg" alt="Formal Shoes">
-        <div class="overlay"></div>
         <div class="slide-content">
-            <h1>Formal Shoes</h1>
-            <p>Perfect for every occasion</p>
-            <a href="#" class="cta-button">View</a>
+            <h1>Fashion Starts From Feet</h1>
+            <p>Trending sneakers for every style and every generation.</p>
+
+            <div class="slider-buttons">
+                <a href="#" class="shop-btn">Shop Trend</a>
+                <a href="#" class="explore-btn">Learn More</a>
+            </div>
+        </div>
+
+        <div class="slide-image">
+            <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=1200&auto=format&fit=crop"
+                alt="Fashion Shoe">
         </div>
     </div>
 
-    <!-- Slide 4 -->
-    <div class="slide">
-        <img src="https://i.pinimg.com/1200x/f1/d9/73/f1d9735f28641bd1218552d28d1426f4.jpg" alt="Summer Shoes">
-        <div class="overlay"></div>
-        <div class="slide-content">
-            <h1>Summer Collection</h1>
-            <p>Lightweight and breathable</p>
-            <a href="#" class="cta-button">Shop Now</a>
-        </div>
-    </div>
+    <!-- ARROWS -->
+    <button class="prev">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
 
-    <!-- Dots -->
-    <div class="slider-nav">
-        <div class="nav-dot active"></div>
-        <div class="nav-dot"></div>
-        <div class="nav-dot"></div>
-        <div class="nav-dot"></div>
-    </div>
+    <button class="next">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
 
-    <!-- Arrows -->
-    <button class="slider-arrow prev" onclick="changeSlide(-1)">‹</button>
-    <button class="slider-arrow next" onclick="changeSlide(1)">›</button>
-
-</div>
+</section>
 
      <script src="${pageContext.request.contextPath}/js/homebanner.js"></script>
      
@@ -181,7 +199,9 @@
         </div>
     </section>
     
-        <h2 >Shop By Category</h2>
+       <h2 class="category" style="text-align:center;">
+    Shop By Category
+</h2>
     
     <div class="container-category">
     <!-- Casual -->
@@ -460,7 +480,7 @@
 	
 	
 
-	<section class="newsletter-section">
+	<section class="newsletterr-section">
 		<h2>Subscribe for Exclusive Offers</h2>
 		<p>Get 10% off your first purchase!</p>
 		<form class="newsletter-formm">

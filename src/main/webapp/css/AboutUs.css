@@ -1,25 +1,77 @@
 @charset "UTF-8";
 
-body {
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 	font-family: Arial, sans-serif;
-	background: #f7f7f7;
-	color: #222;
-	line-height: 1.6;
 }
 
-img {
+/* About Page Specific Styles */
+.about-header {
+	padding-top: 50px;
+	text-align: center;
+	background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+		url("https://i.pinimg.com/1200x/be/92/6a/be926a73073467f9b1bb7c6ba1648a13.jpg")
+		center/cover;
+	color: white;
+	padding-bottom: 50px;
+	animation: fadeIn 1s ease-out;
+}
+
+.about-header h1 {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.about-section {
+	padding: 5rem 2rem;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.about-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 4rem;
+	align-items: center;
+	margin-bottom: 4rem;
+}
+
+.about-image {
 	width: 100%;
-	display: block;
+	height: 400px;
+	object-fit: cover;
+	border-radius: 8px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-a {
-	text-decoration: none;
+.about-content h2 {
+	font-size: 2.5rem;
+	margin-bottom: 1.5rem;
+	color: #1a1a1a;
+}
+
+.about-content p {
+	line-height: 1.8;
+	color: #666;
+	margin-bottom: 1.5rem;
 }
 
 .content-container {
 	width: 90%;
 	max-width: 1200px;
 	margin: auto;
+}
+
+.content-container img {
+	width: 100%;
+	display: block;
+	object-fit: cover;
+}
+
+.content-container a {
+	text-decoration: none;
 }
 
 .section-spacing {
@@ -32,7 +84,7 @@ a {
 	margin-bottom: 50px;
 }
 
-.primary-button {
+.primary-buttonnn {
 	display: inline-block;
 	padding: 14px 28px;
 	background: #111;
@@ -42,10 +94,14 @@ a {
 	transition: 0.35s;
 }
 
-.primary-button:hover {
+.primary-buttonnn:hover {
 	background: #ff4d30;
 	transform: translateY(-4px);
 	box-shadow: 0 12px 25px rgba(255, 77, 48, 0.25);
+}
+
+.primary-buttonnn a {
+	text-decoration: none;
 }
 
 /* Banner */
@@ -265,5 +321,26 @@ a {
 	}
 	.section-heading {
 		font-size: 28px;
+	}
+}
+
+@media ( max-width : 768px) {
+	.about-story, .company-stats, .team-members, .core-values {
+		grid-template-columns: 1fr;
+	}
+	.about-banner-content h1 {
+		font-size: 34px;
+	}
+	.section-heading {
+		font-size: 28px;
+	}
+	.about-story {
+		gap: 30px;
+	}
+	.member-card {
+		padding: 20px;
+	}
+	.about-grid {
+		grid-template-columns: 1fr;
 	}
 }

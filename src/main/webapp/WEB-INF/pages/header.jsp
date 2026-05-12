@@ -1,70 +1,151 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Header</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	
+	
+	<c:if test="${not empty sessionScope.error}">
+    <div class="alert error">${sessionScope.error}</div>
+    <c:remove var="error" scope="session"/>
+</c:if>
 
-</head>
+<c:if test="${not empty sessionScope.success}">
+    <div class="alert success">${sessionScope.success}</div>
+    <c:remove var="success" scope="session"/>
+</c:if>
 
-<body>
+<nav class="navbar">
 
-  <!-- Main Navbar -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <!-- Logo -->
-      <a href="#" class="logo">ShoesMandu</a>
+	<!-- LEFT -->
+	<div class="left-section">
 
-      <!-- Menu -->
-      <ul class="nav-menu">
-        <li><a href="${pageContext.request.contextPath}/home" class="nav-link">Home</a></li>
-        <li><a href="${pageContext.request.contextPath}/product" class="nav-link">Products</a></li>
-        <li><a href="${pageContext.request.contextPath}/AboutUs" class="nav-link">AboutUs</a></li>
-        <li><a href="${pageContext.request.contextPath}/Contact" class="nav-link">Contact</a></li>
-      </ul>
+		<div class="menu-toggle" id="menu-toggle">
+			<i class="fa-solid fa-bars"></i>
+		</div>
 
-      <!-- Search Bar -->
-      <div class="search-container">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" class="search-input" placeholder="Search shoes, brands, sizes...">
-      </div>
+		<div class="logo">
+			<a href="${pageContext.request.contextPath}/home">
+				Shoesmandu
+			</a>
+		</div>
 
-      <!-- Right Side Icons -->
-      <div class="right-icons">
-        <button class="icon-btn" title="User Profile">
-          <i class="fas fa-user"></i>
-        </button>
-        <button class="icon-btn" title="Wishlist">
-          <i class="fas fa-heart"></i>
-        </button>
-        <button class="icon-btn" title="Cart">
-          <i class="fas fa-shopping-cart"></i>
-        </button>
-        <div class="auth-buttons">
-          <a href="${pageContext.request.contextPath}/login" class="auth-btn login-btn">Login</a>
-          <a href="${pageContext.request.contextPath}/register" class="auth-btn register-btn">Register</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+	</div>
 
-  <!-- Sub Navbar -->
-  <nav class="sub-navbar">
-    <div class="sub-nav-container">
-      <ul class="sub-nav-menu">
-        <li><a href="#" class="sub-nav-link">Men</a></li>
-        <li><a href="#" class="sub-nav-link">Women</a></li>
-        <li><a href="#" class="sub-nav-link">Junior</a></li>
-        <li><a href="#" class="sub-nav-link">Special Offer</a></li>
-        <li><a href="#" class="sub-nav-link">New Arrivals</a></li>
-      </ul>
-    </div>
-  </nav>
+	<!-- MENU -->
+	<ul class="nav-links">
 
-</body>
+		<li>
+			<a href="${pageContext.request.contextPath}/home">Home</a>
+		</li>
 
-</html>
+		<li>
+			<a href="${pageContext.request.contextPath}/product">Products</a>
+		</li>
+
+		<li>
+			<a href="${pageContext.request.contextPath}/AboutUs">About</a>
+		</li>
+
+		<li>
+			<a href="${pageContext.request.contextPath}/Contact">Contact</a>
+		</li>
+
+	</ul>
+
+	<!-- SEARCH -->
+	<form action="${pageContext.request.contextPath}/product"
+		  method="get"
+		  class="search-box">
+
+		<i class="fa-solid fa-magnifying-glass"></i>
+
+		<input type="text"
+			   name="keyword"
+			   placeholder="Search shoes...">
+
+	</form>
+
+	<!-- RIGHT -->
+	<div class="right-section">
+
+		<div class="nav-icons">
+
+			<!--  WISHLIST -->
+			<a href="${pageContext.request.contextPath}/wishlist">
+				<i class="fa-solid fa-heart"></i>
+
+				<c:if test="${wishlistCount > 0}">
+					<span class="badge">${wishlistCount}</span>
+				</c:if>
+			</a>
+
+			<!-- CART -->
+			<a href="${pageContext.request.contextPath}/cart">
+				<i class="fa-solid fa-cart-shopping"></i>
+
+				<c:if test="${cartCount > 0}">
+					<span class="badge">${cartCount}</span>
+				</c:if>
+			</a>
+
+			<!-- USER -->
+			<c:choose>
+
+				<c:when test="${not empty sessionScope.user}">
+					<a href="${pageContext.request.contextPath}/profile">
+						<i class="fa-solid fa-user"></i>
+					</a>
+				</c:when>
+
+				<c:otherwise>
+					<a href="${pageContext.request.contextPath}/login">
+						<i class="fa-solid fa-user"></i>
+					</a>
+				</c:otherwise>
+
+			</c:choose>
+
+		</div>
+
+		<div class="nav-actions">
+
+			<c:choose>
+
+				<c:when test="${not empty sessionScope.user}">
+					<a href="${pageContext.request.contextPath}/logout"
+					   class="login-btn">
+						Logout
+					</a>
+				</c:when>
+
+				<c:otherwise>
+					<a href="${pageContext.request.contextPath}/login"
+					   class="login-btn">
+						Login
+					</a>
+
+					<a href="${pageContext.request.contextPath}/register"
+					   class="register-btn">
+						Register
+					</a>
+				</c:otherwise>
+
+			</c:choose>
+
+		</div>
+
+	</div>
+
+</nav>
+
+<!-- JS MENU TOGGLE -->
+<script>
+	const toggleBtn = document.getElementById("menu-toggle");
+	const navLinks = document.querySelector(".nav-links");
+
+	toggleBtn.addEventListener("click", () => {
+		navLinks.classList.toggle("active");
+	});
+</script>

@@ -1,17 +1,5 @@
 @charset "UTF-8";
 
-body {
-	font-family: Arial, sans-serif;
-	background: #f8f8f8;
-	color: #222;
-	line-height: 1.6;
-}
-
-img {
-	width: 100%;
-	display: block;
-}
-
 .page-container {
 	width: 90%;
 	max-width: 1200px;

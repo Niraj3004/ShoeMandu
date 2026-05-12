@@ -1,0 +1,2 @@
+INDEX VERSION 1.4+C:\Users\DELL\eclipse-workspace\ShoesMandu\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+205906119.index
