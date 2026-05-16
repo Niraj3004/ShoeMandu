@@ -1,49 +1,42 @@
 package com.shoesmandu.model;
 
 /**
- * UserModel Class
- * This class represents a User entity in the system.
- * It is used to transfer user data between layers (Controller ↔ Service ↔ DAO).
+ * UserModel Class This class stores user information.
  */
 public class UserModel {
-	
-	
+	// VARIABLES
 
-    //  Unique ID for each user (Primary Key in database)
-    private int userID;
+	private int userID;
 
-    //  User's first name
-    private String userFirstName;
+	private String userFirstName;
 
-    //  User's last name
-    private String userLastName;
+	private String userLastName;
 
-    //  User's email (used for login)
-    private String userEmail;
+	private String userEmail;
 
-    //  User's password (stored as hashed value)
-    private String userPassword;
+	private String userPassword;
 
-    //  User's phone number
-    private String userPhone;
+	private String userPhone;
 
-    //  User's address
-    private String userAddress;
+	private String userAddress;
 
-    //  Role of user (admin / user)
-    private String role;
+	private String role;
 
-    // Account status (pending / active / rejected / blocked)
-    private String status;
+	private String status;
 
-    // Profile image path or filename
-    private String userImageURL;
-    
-    
+	private String userImageURL;
 
-    public UserModel(int userID, String userFirstName, String userLastName, String userEmail, String userPassword,
+	// DEFAULT CONSTRUCTOR
+
+	public UserModel() {
+
+	}
+
+	// PARAMETERIZED CONSTRUCTOR
+
+	public UserModel(int userID, String userFirstName, String userLastName, String userEmail, String userPassword,
 			String userPhone, String userAddress, String role, String status, String userImageURL) {
-		super();
+
 		this.userID = userID;
 		this.userFirstName = userFirstName;
 		this.userLastName = userLastName;
@@ -56,145 +49,86 @@ public class UserModel {
 		this.userImageURL = userImageURL;
 	}
 
-	//  GETTERS & SETTERS 
 
-    /**
-     * Get user ID
-     */
-    public int getUserID() {
-        return userID;
-    }
+	// GETTERS & SETTERS
 
-    /**
-     * Set user ID
-     */
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
+	public int getUserID() {
+		return userID;
+	}
 
-    /**
-     * Get first name
-     */
-    public String getUserFirstName() {
-        return userFirstName;
-    }
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
 
-    /**
-     * Set first name
-     */
-    public void setUserFirstName(String userFirstName) {
-        this.userFirstName = userFirstName;
-    }
+	public String getUserFirstName() {
+		return userFirstName;
+	}
 
-    /**
-     * Get last name
-     */
-    public String getUserLastName() {
-        return userLastName;
-    }
+	public void setUserFirstName(String userFirstName) {
+		this.userFirstName = userFirstName;
+	}
 
-    /**
-     * Set last name
-     */
-    public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
-    }
+	public String getUserLastName() {
+		return userLastName;
+	}
 
-    /**
-     * Get email
-     */
-    public String getUserEmail() {
-        return userEmail;
-    }
+	public void setUserLastName(String userLastName) {
+		this.userLastName = userLastName;
+	}
 
-    /**
-     * Set email
-     */
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
+	public String getUserEmail() {
+		return userEmail;
+	}
 
-    /**
-     * Get password (hashed)
-     */
-    public String getUserPassword() {
-        return userPassword;
-    }
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
 
-    /**
-     * Set password ( hashed before saving)
-     */
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
+	public String getUserPassword() {
+		return userPassword;
+	}
 
-    /**
-     * Get phone number
-     */
-    public String getUserPhone() {
-        return userPhone;
-    }
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
 
-    /**
-     * Set phone number
-     */
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
-    }
+	public String getUserPhone() {
+		return userPhone;
+	}
 
-    /**
-     * Get address
-     */
-    public String getUserAddress() {
-        return userAddress;
-    }
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
 
-    /**
-     * Set address
-     */
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress;
-    }
+	public String getUserAddress() {
+		return userAddress;
+	}
 
-    /**
-     * Get user role (admin/user)
-     */
-    public String getRole() {
-        return role;
-    }
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
 
-    /**
-     * Set user role
-     */
-    public void setRole(String role) {
-        this.role = role;
-    }
+	public String getRole() {
+		return role;
+	}
 
-    /**
-     * Get account status
-     */
-    public String getStatus() {
-        return status;
-    }
+	public void setRole(String role) {
+		this.role = role;
+	}
 
-    /**
-     * Set account status (pending/active/rejected/blocked)
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    /**
-     * Get profile image URL
-     */
-    public String getUserImageURL() {
-        return userImageURL;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    /**
-     * Set profile image URL
-     */
-    public void setUserImageURL(String userImageURL) {
-        this.userImageURL = userImageURL;
-    }
+	public String getUserImageURL() {
+		return userImageURL;
+	}
+
+	public void setUserImageURL(String userImageURL) {
+		this.userImageURL = userImageURL;
+	}
 }
