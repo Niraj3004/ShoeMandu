@@ -114,8 +114,8 @@
                 <div class="product-info">
                     <h3>744-Sky-Female1</h3>
                     <div class="price">
-                        <span class="offer-price">Rs 800</span>
-                        <span class="original-price">Rs 120</span>
+                        <span class="offer-price">Rs 1,800</span>
+                        <span class="original-price">Rs 2,000</span>
                     </div>
                     <div class="rating">
                         ★★★★☆
@@ -132,8 +132,8 @@
                 <div class="product-info">
                     <h3>745-Blush-4</h3>
                     <div class="price">
-                        <span class="offer-price">Rs 700</span>
-                        <span class="original-price">Rs 100</span>
+                        <span class="offer-price">Rs 4,700</span>
+                        <span class="original-price">Rs 5,100</span>
                     </div>
                     <div class="rating">
                         ★★★★☆    
@@ -150,8 +150,8 @@
                 <div class="product-info">
                     <h3>746-sky-uni2</h3>
                     <div class="price">
-                        <span class="offer-price">Rs 900</span>
-                        <span class="original-price">Rs 130</span>
+                        <span class="offer-price">Rs 2,900</span>
+                        <span class="original-price">Rs 3,130</span>
                     </div>
                     <div class="rating">
                         ★★★★☆
@@ -168,8 +168,8 @@
                 <div class="product-info">
                     <h3>746-white4</h3>
                     <div class="price">
-                        <span class="offer-price">Rs 850</span>
-                        <span class="original-price">Rs 115</span>
+                        <span class="offer-price">Rs 4,850</span>
+                        <span class="original-price">Rs 5,115</span>
                     </div>
                     <div class="rating">
                         ★★★★☆
@@ -186,8 +186,8 @@
                 <div class="product-info">
                     <h3>563G-Julio-White-1</h3>
                     <div class="price">
-                        <span class="offer-price">Rs 950</span>
-                        <span class="original-price">Rs 115</span>
+                        <span class="offer-price">Rs 8,950</span>
+                        <span class="original-price">Rs 7,115</span>
                     </div>
                     <div class="rating">
                         ★★★★☆
@@ -291,7 +291,7 @@
 
         </div>
     </section>
-    
+    <!-- Deals section -->
     
     <section class="deals-section">
 
@@ -402,33 +402,33 @@
 </section>
 
  <script src="${pageContext.request.contextPath}/js/deals.js"></script>
+ 
+ <!-- Brands slider section -->
      
 
 
+<!-- Brands Slider -->
 <section class="brands-section">
     <h2>Our Brands</h2>
-
     <div class="brands-slider">
-        <div class="brands-track">
-
-            <!-- Original logos -->
-            <img src="${pageContext.request.contextPath}/resources/images/home/nike.jpg" alt="Nike">
-            <img src="${pageContext.request.contextPath}/resources/images/home/adidas.jpg" alt="Adidas">
-            <img src="${pageContext.request.contextPath}/resources/images/home/converse.jpg" alt="Puma">
-            <img src="${pageContext.request.contextPath}/resources/images/home/puma.jpg" alt="Reebok">
-            <img src="${pageContext.request.contextPath}/resources/images/home/rebook.jpg" alt="Converse">
-
-            <img src="${pageContext.request.contextPath}/resources/images/home/nike.jpg" alt="Nike">
-            <img src="${pageContext.request.contextPath}/resources/images/home/adidas.jpg" alt="Nike">
-            <img src="${pageContext.request.contextPath}/resources/images/home/converse.jpg" alt="Nike">
-            <img src="${pageContext.request.contextPath}/resources/images/home/puma.jpg" alt="Nike">
-            <img src="${pageContext.request.contextPath}/resources/images/home/rebook.jpg" alt="Nike">
-
+        <div class="brands-track" style="animation-duration: 40s; gap: 110px;">
+            <img style="width: 110px; height: auto;" src="${pageContext.request.contextPath}/resources/images/home/nike.jpg" alt="Nike">
+            <img style="width: 110px; height: auto;" src="${pageContext.request.contextPath}/resources/images/home/adidas.jpg" alt="Adidas">
+            <img style="width: 110px; height: auto;" src="${pageContext.request.contextPath}/resources/images/home/converse.jpg" alt="Converse">
+            <img style="width: 110px; height: auto;" src="${pageContext.request.contextPath}/resources/images/home/puma.jpg" alt="Puma">
+            <img style="width: 110px; height: auto;" src="${pageContext.request.contextPath}/resources/images/home/rebook.jpg" alt="Reebok">
+            <!-- Duplicated for infinite scroll effect -->
+            <img style="width: 110px; height: auto;" src="${pageContext.request.contextPath}/resources/images/home/nike.jpg" alt="Nike">
+            <img style="width: 110px; height: auto;" src="${pageContext.request.contextPath}/resources/images/home/adidas.jpg" alt="Adidas">
+            <img style="width: 110px; height: auto;" src="${pageContext.request.contextPath}/resources/images/home/converse.jpg" alt="Converse">
+            <img style="width: 110px; height: auto;" src="${pageContext.request.contextPath}/resources/images/home/puma.jpg" alt="Puma">
+            <img style="width: 110px; height: auto;" src="${pageContext.request.contextPath}/resources/images/home/rebook.jpg" alt="Reebok">
         </div>
     </div>
 </section>
 
 	  <script src="${pageContext.request.contextPath}/js/brands.js"></script>
+	  <!-- Testimonials section -->
 	
 
 	<section class="shoesmandu-testimonials">
@@ -478,16 +478,22 @@
 		</div>
 	</section>
 	
-	
+	<!-- Newsletterr section -->
 
-	<section class="newsletterr-section">
-		<h2>Subscribe for Exclusive Offers</h2>
-		<p>Get 10% off your first purchase!</p>
-		<form class="newsletter-formm">
-			<input type="email" placeholder="Enter your email">
-			<button type="submit">Subscribe</button>
-		</form>
-	</section>
+	
+<section class="newsletterr-section">
+    <h2>Subscribe for Exclusive Offers</h2>
+    <p>Get 10% off your first purchase!</p>
+    <p style="margin-bottom: 10px;">Join thousands of happy ShoesMandu customers and never miss a deal, new arrival, or special discount.</p>
+    <p style="margin-bottom: 20px; color: gray;">Unsubscribe anytime. We respect your privacy.</p>
+    <form class="newsletter-formm">
+        <input type="email" placeholder="Enter your email">
+        <button type="submit">Subscribe</button>
+    </form>
+    
+    
+</section>
+	<!-- Footer section -->
 
     <jsp:include page="footer.jsp" />
 
