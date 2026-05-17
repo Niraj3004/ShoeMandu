@@ -485,7 +485,7 @@
     <h2>Subscribe for Exclusive Offers</h2>
     <p>Get 10% off your first purchase!</p>
     <p style="margin-bottom: 10px;">Join thousands of happy ShoesMandu customers and never miss a deal, new arrival, or special discount.</p>
-    <p style="margin-bottom: 20px; color: gray;">Unsubscribe anytime. We respect your privacy.</p>
+
     <form class="newsletter-formm">
         <input type="email" placeholder="Enter your email">
         <button type="submit">Subscribe</button>
