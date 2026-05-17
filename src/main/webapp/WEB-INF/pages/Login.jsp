@@ -28,29 +28,29 @@
     <!-- LEFT SIDE -->
     <div class="login-left">
         <div class="brand-box">
-            <h2>Welcome Back</h2>
-            <p>Login to continue shopping premium shoes and offers.</p>
+            <h2 style="font-size: 58px; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px;">Welcome Back</h2>
+            <p style="font-size: 30px; line-height: 1.7; opacity: 0.85; margin-bottom: 25px;">Login to continue shopping premium shoes and offers.</p>
 
             <div class="feature-grid">
 
-                <div class="feature-card">
+                <div class="feature-card" style="width: 100%; padding: 20px 80px;">
                     <i class="fa-solid fa-shoe-prints"></i>
-                    <h3>New Collection</h3>
+                    <h3 style="font-size: 20px;">New Collection</h3>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" style="width: 100%; padding: 20px 80px;">
                     <i class="fa-solid fa-lock"></i>
-                    <h3>Secure Login</h3>
+                    <h3 style="font-size: 20px;">Secure Login</h3>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" style="width: 100%; padding: 20px 80px;">
                     <i class="fa-solid fa-tags"></i>
-                    <h3>Best Offers</h3>
+                    <h3 style="font-size: 20px;">Best Offers</h3>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" style="width: 100%; padding: 20px 80px;">
                     <i class="fa-solid fa-truck-fast"></i>
-                    <h3>Fast Delivery</h3>
+                    <h3 style="font-size: 20px;">Fast Delivery</h3>
                 </div>
 
             </div>
@@ -63,7 +63,7 @@
         <div class="login-container">
 
             <h2>Login</h2>
-            <p>Access your ShoesMandu account</p>
+            <p>Dive into your ShoesMandu account</p>
 
             <c:if test="${not empty error}">
                 <div class="error-message">${error}</div>
@@ -72,6 +72,7 @@
             <c:if test="${not empty success}">
                 <div class="success-message">${success}</div>
             </c:if>
+            <!-- Credential section in login -->
 
             <form action="${pageContext.request.contextPath}/login" method="post">
 
@@ -109,12 +110,13 @@
             </form>
 
             <div class="divider">OR</div>
+            <!-- Google logging way -->
 
-            <button class="google-btn">
+            <button class="google-btn" style="background-color: crimson; color: white; border: none;">
                 <i class="fa-brands fa-google"></i> Login with Google
             </button>
             
-            
+            <!-- Register in login page -->
             <div class="register-link">
                 Don't have an account?
                 <a href="${pageContext.request.contextPath}/register">Register</a>
@@ -125,6 +127,7 @@
     </div>
 
 </div>
+<!-- Adding Footer section  -->
 
 	<jsp:include page="footer.jsp" />
 
