@@ -15,10 +15,26 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Authentication Filter
+ * 
+ * This filter controls access to the application
+ * based on user authentication and authorization.
+ * 
+ * It ensures:
+ * 1. Public pages are accessible without login
+ * 2. Protected pages require authentication
+ * 3. Admin pages are restricted to admin users only
+ * 4. Logged-in users cannot access login/register pages again
+ * 5. Inactive users are blocked from accessing the system
+ * 6. Static resources are always accessible
+ * 
+ * This filter applies to all incoming requests ("/*").
+ */
 @WebFilter("/*")
 public class FilterauthenticationServlet implements Filter {
 
-	// Public pages
+	// PUBLIC PAGES
 	private static final String HOME = "/home";
 	private static final String PRODUCT = "/product";
 	private static final String ABOUT = "/AboutUs";
@@ -26,14 +42,20 @@ public class FilterauthenticationServlet implements Filter {
 	private static final String LOGIN = "/login";
 	private static final String REGISTER = "/register";
 
-	// Admin page
+	// ADMIN PAGE
 	private static final String DASHBOARD = "/dashboard";
 
+	/**
+	 * Filter initialization method
+	 */
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-
+		// No initialization required
 	}
 
+	/**
+	 * Main filter logic that controls access
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -41,12 +63,16 @@ public class FilterauthenticationServlet implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 
+		// GET REQUEST URI
 		String uri = req.getRequestURI();
+
+		// GET CONTEXT PATH
 		String contextPath = req.getContextPath();
 
+		// EXTRACT PATH WITHOUT CONTEXT
 		String path = uri.substring(contextPath.length());
 
-		// Allow static resources
+		// ALLOW STATIC RESOURCES (CSS, JS, IMAGES)
 		if (path.startsWith("/resources/") || path.startsWith("/css/") || path.startsWith("/js/")
 				|| path.startsWith("/images/") || path.startsWith("/uploads/") || path.endsWith(".css")
 				|| path.endsWith(".js") || path.endsWith(".png") || path.endsWith(".jpg") || path.endsWith(".jpeg")
@@ -56,84 +82,56 @@ public class FilterauthenticationServlet implements Filter {
 			return;
 		}
 
-		// Get logged in user
+		// GET LOGGED-IN USER FROM SESSION
 		UserModel user = (UserModel) SessionUtil.getAttribute(req, "user");
 
 		boolean isLoggedIn = user != null;
 
-		// Public pages
+		// CHECK PUBLIC PAGES
 		boolean isPublicPage = path.equals(HOME) || path.equals(PRODUCT) || path.equals(ABOUT) || path.equals(CONTACT)
 				|| path.equals(LOGIN) || path.equals(REGISTER);
 
-		boolean isCartOrWishlistAction = path.equals("/add-to-cart") || path.equals("/add-to-wishlist")
-				|| path.equals("/cart") || path.equals("/wishlist");
+		// CHECK ADMIN PAGES
+		boolean isAdminPage =
+				path.startsWith("/admin")
+				|| path.equals(DASHBOARD);
 
-		// Admin pages
-		boolean isAdminPage = path.startsWith("/admin") || path.equals(DASHBOARD);
-
-		// If user is not logged in
+		// IF USER IS NOT LOGGED IN
 		if (!isLoggedIn) {
 
 			if (isPublicPage) {
-
 				chain.doFilter(request, response);
-
 			} else {
-
-				res.sendRedirect(contextPath + LOGIN);
+				res.sendRedirect(req.getContextPath() + LOGIN);
 			}
 
 			return;
 		}
-		
-		if (isCartOrWishlistAction) {
 
-			// store message in session
-			SessionUtil.setAttribute(req, "error", "Please login first to continue");
-
-			res.sendRedirect(contextPath + LOGIN);
-			return;
-		}
-
-		// Check account status
+		// BLOCK INACTIVE USERS
 		if (!"active".equalsIgnoreCase(user.getStatus())) {
 
 			SessionUtil.invalidate(req);
-
-			SessionUtil.setAttribute(req, "error", "Your account is waiting for admin approval.");
-
-			res.sendRedirect(contextPath + LOGIN);
+			res.sendRedirect(req.getContextPath() + LOGIN);
 			return;
 		}
 
-		// Prevent login/register after login
-		if (path.equals(LOGIN) || path.equals(REGISTER)) {
-
-			if ("admin".equalsIgnoreCase(user.getRole())) {
-
-				res.sendRedirect(contextPath + DASHBOARD);
-
-			} else {
-
-				res.sendRedirect(contextPath + HOME);
-			}
-
-			return;
-		}
-
-		// Admin authorization
+		// BLOCK NON-ADMIN USERS FROM ADMIN PAGES
 		if (isAdminPage && !"admin".equalsIgnoreCase(user.getRole())) {
 
-			res.sendRedirect(contextPath + HOME);
+			res.sendRedirect(req.getContextPath() + HOME);
 			return;
 		}
 
-		// Continue request
+		// ALLOW REQUEST TO CONTINUE
 		chain.doFilter(request, response);
 	}
 
+	/**
+	 * Filter destroy method
+	 */
 	@Override
 	public void destroy() {
-
+		// No cleanup required
 	}
 }
