@@ -1,22 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Premium Shoes Store</title>
+    <title>Contact Us - ShoesMandu</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/Contact.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/header.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/footer.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/Contact.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/footer.css" />
 </head>
 
 <body>
 
 <jsp:include page="header.jsp" />
+
+<c:if test="${not empty sessionScope.success}">
+    <div class="alert success">
+        ${sessionScope.success}
+    </div>
+    <c:remove var="success" scope="session"/>
+</c:if>
+
+<c:if test="${not empty sessionScope.error}">
+    <div class="alert error">
+        ${sessionScope.error}
+    </div>
+    <c:remove var="error" scope="session"/>
+</c:if>
 
     <section class="contact-banner">
         <img src="https://i.pinimg.com/736x/85/7c/4b/857c4b7b12c5b87e6ea530a9bfc940cf.jpg">
@@ -70,27 +86,27 @@
                 <div class="contact-form-box">
                     <h3>Send Message</h3>
 
-                    <form>
+                    <form action="${pageContext.request.contextPath}/Contact" method="post">
                         <div class="input-row">
                             <div class="input-group">
                                 <label>First Name</label>
-                                <input type="text" placeholder="First name">
+                                <input type="text" name="firstName" placeholder="First name">
                             </div>
 
                             <div class="input-group">
                                 <label>Last Name</label>
-                                <input type="text" placeholder="Last name">
+                                <input type="text"  name="lastName"  placeholder="Last name">
                             </div>
                         </div>
 
                         <div class="input-group">
                             <label>Email Address</label>
-                            <input type="email" placeholder="Your email">
+                            <input type="email" name="email" placeholder="Your email">
                         </div>
 
                         <div class="input-group">
                             <label>Subject</label>
-                            <select>
+                            <select name="subject">
                                 <option>Select subject</option>
                                 <option>Order Inquiry</option>
                                 <option>Returns</option>
@@ -100,7 +116,7 @@
 
                         <div class="input-group">
                             <label>Message</label>
-                            <textarea placeholder="Write your message"></textarea>
+                            <textarea name="message" placeholder="Write your message"></textarea>
                         </div>
 
                         <button class="submit-button" type="submit">Send Message</button>
