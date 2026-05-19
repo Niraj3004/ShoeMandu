@@ -38,10 +38,11 @@
 
                 <div class="about-story-text">
                     <h3>From Passion to Perfection</h3>
-                    <p>Founded in 2026 by sneaker enthusiasts, we started with a simple vision: to create the world's
-                        finest shoes that combine style, comfort, and durability.  <p>Today, we're proud to serve thousands
+                    <p style="font-size: 17px; font-weight: 500; line-height: 1.8;">Founded in 1920 by sneaker enthusiasts, we started with a simple vision: to create the world's
+                        finest shoes that combine style, comfort, and durability.
+                          <p style="font-size: 17px; font-weight: 500; line-height: 1.8;">Today, we're proud to serve thousands
                         of customers worldwide with our premium collections.</p></p>
-                    <p>very pair is crafted with premium materials and meticulous attention to detail in our
+                    <p style="font-size: 17px; font-weight: 500; line-height: 1.8;">Every pair is crafted with premium materials and meticulous attention to detail in our
                         state-of-the-art facilities. We believe quality should never be compromised.</p>
                     <a href="#" class="primary-buttonnn">Explore Collection</a>
                 </div>
