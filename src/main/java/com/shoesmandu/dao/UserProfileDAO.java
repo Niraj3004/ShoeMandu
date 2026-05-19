@@ -6,40 +6,69 @@ import java.sql.PreparedStatement;
 import com.shoesmandu.model.UserModel;
 import com.shoesmandu.util.DBconfig;
 
+/**
+ * UserProfileDAO handles database operations
+ * related to updating user profile information
+ * in the Shoesmandu system.
+ * 
+ * It provides functionality to update
+ * user personal details such as name,
+ * phone, address, and profile image.
+ * 
+ * This DAO interacts with the user table
+ * in the database.
+ */
 public class UserProfileDAO {
 
     /**
-     * Update user profile information in database
+     * Updates user profile information in the database.
      * 
-     * @param user  UserModel object containing updated user details
-     * @return true if update successful, false otherwise
+     * This method updates user details based on user_id.
+     * It does not modify email, password, role, or status.
+     * 
+     * @param user UserModel object containing updated details
+     * @return true if update is successful, otherwise false
      */
     public boolean updateUserProfile(UserModel user) {
 
-        // SQL query to update user details based on user_id (primary key)
-        String sql = "UPDATE user SET user_first_name=?, user_last_name=?, user_phone=?, user_address=?, user_image_url=? WHERE user_id=?";
+        // SQL query to update user profile
+        String sql = "UPDATE user SET "
+                + "user_first_name=?, "
+                + "user_last_name=?, "
+                + "user_phone=?, "
+                + "user_address=?, "
+                + "user_image_url=? "
+                + "WHERE user_id=?";
 
-        // try-with-resources  automatically closes connection and statement
         try (Connection con = DBconfig.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
+                PreparedStatement pst = con.prepareStatement(sql)) {
 
-            // Set updated values from UserModel
-            pst.setString(1, user.getUserFirstName());   // first name
-            pst.setString(2, user.getUserLastName());    // last name
-            pst.setString(3, user.getUserPhone());       // phone number
-            pst.setString(4, user.getUserAddress());     // address
-            pst.setString(5, user.getUserImageURL());    // profile image path
-            pst.setInt(6, user.getUserID());             // user_id (primary key)
+            // SET FIRST NAME
+            pst.setString(1, user.getUserFirstName());
 
-            // executeUpdate() returns number of rows affected
-            // if > 0  update successful  return true
+            // SET LAST NAME
+            pst.setString(2, user.getUserLastName());
+
+            // SET PHONE NUMBER
+            pst.setString(3, user.getUserPhone());
+
+            // SET ADDRESS
+            pst.setString(4, user.getUserAddress());
+
+            // SET PROFILE IMAGE
+            pst.setString(5, user.getUserImageURL());
+
+            // SET USER ID (PRIMARY KEY)
+            pst.setInt(6, user.getUserID());
+
+            // EXECUTE UPDATE
             return pst.executeUpdate() > 0;
 
         } catch (Exception e) {
-            e.printStackTrace(); // print error in console
+
+            e.printStackTrace();
         }
 
-        // return false if update fails
         return false;
     }
 }
