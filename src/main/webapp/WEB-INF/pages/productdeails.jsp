@@ -1,47 +1,121 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!DOCTYPE html>
-<html>
+        <!DOCTYPE html>
+        <html lang="en">
 
-<head>
-<title>Product Detail</title>
+        <head>
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/product-detail.css">
+            <meta charset="UTF-8">
 
-</head>
+            <title>${product.productName}</title>
 
-<body>
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 
-<jsp:include page="header.jsp"/>
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 
-<div class="detail-container">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product-detail.css">
 
-	<div class="image-box">
-		<img src="${pageContext.request.contextPath}/${product.imageUrl}">
-	</div>
+        </head>
 
-	<div class="info-box">
+        <body>
 
-		<h1>${product.productName}</h1>
+            <jsp:include page="header.jsp" />
 
-		<p><b>Brand:</b> ${product.brand}</p>
-		<p><b>Category:</b> ${product.category}</p>
+            <div class="product-detail-container">
 
-		<p class="price">Rs ${product.price}</p>
+                <!-- LEFT IMAGE -->
+                <div class="product-image-box">
 
-		<p class="stock">Stock: ${product.stock}</p>
+                    <img src="${pageContext.request.contextPath}/${product.imageUrl}" alt="${product.productName}">
 
-		<p class="desc">${product.description}</p>
+                </div>
 
-		<button class="btn">Add to Cart</button>
+                <!-- RIGHT INFO -->
+                <div class="product-info-box">
 
-	</div>
+                    <div class="category">
+                        ${product.category}
+                    </div>
 
-</div>
+                    <h1>
+                        ${product.productName}
+                    </h1>
 
-<jsp:include page="footer.jsp"/>
+                    <div class="brand">
+                        Brand : ${product.brand}
+                    </div>
 
-</body>
-</html>
+                    <div class="price">
+                        Rs ${product.price}
+                    </div>
+
+                    <div class="stock">
+
+                        <c:choose>
+
+                            <c:when test="${product.stock > 0}">
+                                In Stock (${product.stock})
+                            </c:when>
+
+                            <c:otherwise>
+                                Out Of Stock
+                            </c:otherwise>
+
+                        </c:choose>
+
+                    </div>
+
+                    <div class="description">
+
+                        ${product.description}
+
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <div class="buttons">
+
+                        <!-- ADD TO CART -->
+                        <form action="${pageContext.request.contextPath}/add-to-cart" method="post">
+
+                            <input type="hidden" name="productId" value="${product.productId}">
+
+                            <button type="submit" class="cart-btn">
+
+                                Add To Cart
+
+                            </button>
+
+                        </form>
+
+                        <!-- WISHLIST -->
+                        <form action="${pageContext.request.contextPath}/add-to-wishlist" method="post">
+
+                            <input type="hidden" name="productId" value="${product.productId}">
+
+                            <button type="submit" class="wish-btn">
+
+                                Wishlist
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- BACK -->
+                    <a href="${pageContext.request.contextPath}/product" class="back-btn">
+
+                        ← Back To Products
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <jsp:include page="footer.jsp" />
+
+        </body>
+
+        </html>
