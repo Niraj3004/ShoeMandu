@@ -9,8 +9,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class HomeServlet
+ * HomeServlet handles requests for the Home page.
+ *
+ * Responsibilities:
+ * 1. Handles HTTP GET request to display home page
+ * 2. Forwards request to Home JSP view
+ * 3. Handles POST requests by redirecting to GET method
  */
+
 @WebServlet(asyncSupported = true, urlPatterns = { "/home" })
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

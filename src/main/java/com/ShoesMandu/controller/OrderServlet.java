@@ -3,9 +3,9 @@ package com.shoesmandu.controller;
 import java.io.IOException;
 import java.util.List;
 
-import com.shoesmandu.model.CartModel;
+import com.shoesmandu.model.OrderModel;
 import com.shoesmandu.model.UserModel;
-import com.shoesmandu.service.CartService;
+import com.shoesmandu.service.OrderService;
 import com.shoesmandu.util.SessionUtil;
 
 import jakarta.servlet.ServletException;
@@ -15,23 +15,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * CartServlet handles displaying the user's cart page.
+ * OrderServlet handles displaying user orders.
  *
  * Responsibilities:
- * 1. Handles HTTP GET request for cart page
+ * 1. Handles HTTP GET request for orders page
  * 2. Checks user authentication
- * 3. Fetches cart items for logged-in user
- * 4. Forwards data to cart JSP page
+ * 3. Fetches orders for logged-in user
+ * 4. Forwards data to orders JSP page
  */
-@WebServlet("/cart")
-public class CartServlet extends HttpServlet {
+@WebServlet("/orders")
+public class OrderServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private CartService service = new CartService();
+    private OrderService orderService = new OrderService();
 
     /**
-     * Handles HTTP GET request to load cart page
+     * Handles HTTP GET request to load user orders page
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -46,14 +46,14 @@ public class CartServlet extends HttpServlet {
             return;
         }
 
-        // Fetch cart items for the logged-in user
-        List<CartModel> cartItems = service.getCartItems(user.getUserID());
+        // Fetch orders for the logged-in user
+        List<OrderModel> orders = orderService.getOrdersByUser(user.getUserID());
 
-        // Set cart items to request scope for JSP
-        req.setAttribute("cartItems", cartItems);
+        // Set orders to request scope for JSP
+        req.setAttribute("orders", orders);
 
-        // Forward to cart page
-        req.getRequestDispatcher("/WEB-INF/pages/cart.jsp")
+        // Forward to orders page
+        req.getRequestDispatcher("/WEB-INF/pages/orders.jsp")
                 .forward(req, resp);
     }
 }

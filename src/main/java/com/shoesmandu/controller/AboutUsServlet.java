@@ -8,8 +8,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class AboutUsServlet
+ * AboutUsServlet handles requests for the About Us page
+ * in the Shoesmandu web application.
+ * 
+ * It is responsible for:
+ * 1. Receiving HTTP GET requests
+ * 2. Forwarding request to AboutUs JSP page
+ * 3. Handling optional POST requests (redirects to GET)
  */
+
 @WebServlet("/AboutUs")
 public class AboutUsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

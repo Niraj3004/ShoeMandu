@@ -1,6 +1,5 @@
 package com.shoesmandu.controller;
 
-import java.io.File;
 import java.io.IOException;
 
 import com.shoesmandu.model.ProductModel;
@@ -16,6 +15,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
+/**
+ * AdminAddProductServlet handles product creation
+ * in the Shoesmandu admin panel.
+ * 
+ * It provides:
+ * 1. Product form page (GET request)
+ * 2. Product creation with validation (POST request)
+ * 3. Image upload handling
+ * 4. Saving product via service layer
+ */
 @WebServlet("/adminadd-product")
 @MultipartConfig
 public class AdminAddProductServlet extends HttpServlet {
@@ -24,16 +33,20 @@ public class AdminAddProductServlet extends HttpServlet {
 
     private ProductService productService = new ProductService();
 
-    // LOAD PAGE
+    /**
+     * Loads the Add Product page.
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        req.getRequestDispatcher("/WEB-INF/pages/adminproduct.jsp")
+        req.getRequestDispatcher("/WEB-INF/pages/adminaddproduct.jsp")
            .forward(req, resp);
     }
 
-    // ADD PRODUCT
+    /**
+     * Handles product creation request.
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -48,15 +61,15 @@ public class AdminAddProductServlet extends HttpServlet {
         String stockStr = req.getParameter("stock");
 
         // VALIDATION
-        if (ValidationUtil.isNullOrEmpty(productName)
-                || ValidationUtil.isNullOrEmpty(brand)
-                || ValidationUtil.isNullOrEmpty(category)
-                || ValidationUtil.isNullOrEmpty(priceStr)
-                || ValidationUtil.isNullOrEmpty(stockStr)) {
+        if (ValidationUtil.isNullOrEmpty(productName) ||
+            ValidationUtil.isNullOrEmpty(brand) ||
+            ValidationUtil.isNullOrEmpty(category) ||
+            ValidationUtil.isNullOrEmpty(priceStr) ||
+            ValidationUtil.isNullOrEmpty(stockStr)) {
 
             req.setAttribute("error", "All fields are required");
 
-            req.getRequestDispatcher("/WEB-INF/pages/adminproduct.jsp")
+            req.getRequestDispatcher("/WEB-INF/pages/adminaddproduct.jsp")
                .forward(req, resp);
 
             return;
@@ -66,15 +79,13 @@ public class AdminAddProductServlet extends HttpServlet {
         int stock;
 
         try {
-
             price = Double.parseDouble(priceStr);
             stock = Integer.parseInt(stockStr);
-
         } catch (Exception e) {
 
             req.setAttribute("error", "Invalid price or stock value");
 
-            req.getRequestDispatcher("/WEB-INF/pages/adminproduct.jsp")
+            req.getRequestDispatcher("/WEB-INF/pages/adminaddproduct.jsp")
                .forward(req, resp);
 
             return;
@@ -92,14 +103,13 @@ public class AdminAddProductServlet extends HttpServlet {
             String fileName = imageUtil.getImageNameFromPart(filePart);
 
             String uploadPath =
-                    getServletContext().getRealPath("")
-                    + File.separator
-                    + "uploads";
+                getServletContext().getRealPath("/")
+                + "resources/images/product";
 
-            // upload image
+            // UPLOAD IMAGE
             imageUtil.uploadImage(filePart, uploadPath, "");
 
-            imagePath = "uploads/" + fileName;
+            imagePath = "resources/images/product/" + fileName;
         }
 
         // SET MODEL
@@ -118,13 +128,13 @@ public class AdminAddProductServlet extends HttpServlet {
 
         if (added) {
 
-            resp.sendRedirect(req.getContextPath() + "/product");
+            resp.sendRedirect(req.getContextPath() + "/admin-manageproduct");
 
         } else {
 
             req.setAttribute("error", "Failed to add product");
 
-            req.getRequestDispatcher("/WEB-INF/pages/adminproduct.jsp")
+            req.getRequestDispatcher("/WEB-INF/pages/adminaddproduct.jsp")
                .forward(req, resp);
         }
     }
