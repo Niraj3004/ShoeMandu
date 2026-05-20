@@ -20,16 +20,18 @@
             <jsp:include page="header.jsp" />
 
             <c:if test="${not empty sessionScope.success}">
-                <div class="alert success">
+                <div class="alert alert-success">
                     ${sessionScope.success}
                 </div>
+
                 <c:remove var="success" scope="session" />
             </c:if>
 
             <c:if test="${not empty sessionScope.error}">
-                <div class="alert error">
+                <div class="alert alert-error">
                     ${sessionScope.error}
                 </div>
+
                 <c:remove var="error" scope="session" />
             </c:if>
 
