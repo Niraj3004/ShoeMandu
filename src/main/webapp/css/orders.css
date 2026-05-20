@@ -1,0 +1,122 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	background: #f4f6f9;
+}
+
+/* CONTAINER */
+.orders-container {
+	width: 90%;
+	margin: 40px auto;
+}
+
+/* TITLE */
+.page-title {
+	font-size: 34px;
+	text-align: center;
+	margin-bottom: 30px;
+	color: #222;
+}
+
+/* EMPTY */
+.empty-box {
+	text-align: center;
+	padding: 50px;
+	background: white;
+	border-radius: 12px;
+	color: gray;
+}
+
+/* ORDER CARD */
+.order-card {
+	display: flex;
+	gap: 20px;
+	background: white;
+	padding: 20px;
+	margin-bottom: 20px;
+	border-radius: 12px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+	transition: 0.3s;
+}
+
+.order-card:hover {
+	transform: translateY(-3px);
+}
+
+/* IMAGE */
+.order-img img {
+	width: 140px;
+	height: 140px;
+	object-fit: cover;
+	border-radius: 10px;
+}
+
+/* DETAILS */
+.order-details {
+	flex: 1;
+}
+
+.order-details h2 {
+	font-size: 22px;
+	margin-bottom: 5px;
+}
+
+.desc {
+	color: #666;
+	margin-bottom: 10px;
+}
+
+/* INFO ROW */
+.info-row {
+	display: flex;
+	justify-content: space-between;
+	color: #444;
+	font-size: 14px;
+}
+
+/* PRICE */
+.price {
+	font-size: 20px;
+	font-weight: bold;
+	color: #28a745;
+	margin-top: 10px;
+}
+
+/* STATUS */
+.status {
+	margin-top: 8px;
+	font-weight: bold;
+	padding: 5px 10px;
+	display: inline-block;
+	border-radius: 5px;
+	font-size: 13px;
+}
+
+.status.PENDING {
+	background: #fff3cd;
+	color: #856404;
+}
+
+.status.DELIVERED {
+	background: #d4edda;
+	color: #155724;
+}
+
+.status.CANCELLED {
+	background: #f8d7da;
+	color: #721c24;
+}
+
+/* ADDRESS */
+.address {
+	margin-top: 10px;
+	font-size: 13px;
+	color: #555;
+}

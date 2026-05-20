@@ -85,7 +85,7 @@
                         <div class="contact-form-box">
                             <h3>Send Message</h3>
 
-                            <form action="${pageContext.request.contextPath}/contact" method="post">
+                            <form action="${pageContext.request.contextPath}/Contact" method="post">
                                 <div class="input-row">
                                     <div class="input-group">
                                         <label>First Name</label>
