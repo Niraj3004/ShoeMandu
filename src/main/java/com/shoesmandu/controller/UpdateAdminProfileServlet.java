@@ -17,93 +17,123 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
+/**
+ * UpdateAdminProfileServlet handles updating admin profile information.
+ *
+ * This servlet is responsible for:
+ * - Verifying admin session
+ * - Validating profile input fields
+ * - Handling profile image upload
+ * - Updating admin data in database
+ * - Updating session data after successful update
+ */
 @WebServlet("/update-admin-profile")
 @MultipartConfig
 public class UpdateAdminProfileServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	private UserProfileDAO dao = new UserProfileDAO();
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    // DAO layer object for updating user profile in database
+    private UserProfileDAO dao = new UserProfileDAO();
 
-		// Get user from session using SessionUtil
-		UserModel admin = (UserModel) SessionUtil.getAttribute(req, "user");
+    /**
+     * Handles POST request for updating admin profile
+     *
+     * @param req  contains form data (firstName, lastName, phone, address, image)
+     * @param resp sends response back to JSP page
+     */
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-		// Not logged in
-		if (admin == null) {
-			resp.sendRedirect(req.getContextPath() + "/login");
-			return;
-		}
+        // Get logged-in admin from session
+        UserModel admin = (UserModel) SessionUtil.getAttribute(req, "user");
 
-		// Not admin
-		if (!"admin".equalsIgnoreCase(admin.getRole())) {
-			resp.sendRedirect(req.getContextPath() + "/home");
-			return;
-		}
+        // Check if user is logged in
+        if (admin == null) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
 
-		String firstName = req.getParameter("firstName");
-		String lastName = req.getParameter("lastName");
-		String phone = req.getParameter("phone");
-		String address = req.getParameter("address");
+        // Check if user is admin
+        if (!"admin".equalsIgnoreCase(admin.getRole())) {
+            resp.sendRedirect(req.getContextPath() + "/home");
+            return;
+        }
 
-		if (ValidationUtil.isNullOrEmpty(firstName) || ValidationUtil.isNullOrEmpty(lastName)
-				|| ValidationUtil.isNullOrEmpty(phone) || ValidationUtil.isNullOrEmpty(address)) {
+        // Get form input values
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+        String phone = req.getParameter("phone");
+        String address = req.getParameter("address");
 
-			req.setAttribute("error", "All fields are required");
-			req.setAttribute("admin", admin);
-			req.getRequestDispatcher("/WEB-INF/pages/adminprofile.jsp").forward(req, resp);
-			return;
-		}
+        // Validate required fields
+        if (ValidationUtil.isNullOrEmpty(firstName) ||
+            ValidationUtil.isNullOrEmpty(lastName) ||
+            ValidationUtil.isNullOrEmpty(phone) ||
+            ValidationUtil.isNullOrEmpty(address)) {
 
-		if (!ValidationUtil.isValidPhone(phone)) {
-			req.setAttribute("error", "Please enter a valid 10-digit number.");
-			req.setAttribute("admin", admin);
-			req.getRequestDispatcher("/WEB-INF/pages/adminprofile.jsp").forward(req, resp);
-			return;
-		}
+            req.setAttribute("error", "All fields are required");
+            req.setAttribute("admin", admin);
+            req.getRequestDispatcher("/WEB-INF/pages/adminprofile.jsp")
+               .forward(req, resp);
+            return;
+        }
 
-		// handle image
-		Part filePart = req.getPart("image");
-		String imagePath = null;
+        // Validate phone number format
+        if (!ValidationUtil.isValidPhone(phone)) {
 
-		if (filePart != null && filePart.getSize() > 0) {
+            req.setAttribute("error", "Please enter a valid phone number");
+            req.setAttribute("admin", admin);
+            req.getRequestDispatcher("/WEB-INF/pages/adminprofile.jsp")
+               .forward(req, resp);
+            return;
+        }
 
-			ImageUtil imageUtil = new ImageUtil(); // create object
+        // Handle profile image upload
+        Part filePart = req.getPart("image");
+        String imagePath = null;
 
-			String fileName = imageUtil.getImageNameFromPart(filePart);
+        if (filePart != null && filePart.getSize() > 0) {
 
-			String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+            ImageUtil imageUtil = new ImageUtil();
 
-			imageUtil.uploadImage(filePart, uploadPath, "");
+            String fileName = imageUtil.getImageNameFromPart(filePart);
 
-			imagePath = "uploads/" + fileName;
-		}
+            String uploadPath = getServletContext().getRealPath("")
+                    + File.separator + "uploads";
 
-		// Update model
-		admin.setUserFirstName(firstName.trim());
-		admin.setUserLastName(lastName.trim());
-		admin.setUserPhone(phone.trim());
-		admin.setUserAddress(address.trim());
+            imageUtil.uploadImage(filePart, uploadPath, "");
 
-		if (imagePath != null) {
-			admin.setUserImageURL(imagePath);
-		}
+            imagePath = "uploads/" + fileName;
+        }
 
-		boolean updated = dao.updateUserProfile(admin);
+        // Update admin model with new values
+        admin.setUserFirstName(firstName.trim());
+        admin.setUserLastName(lastName.trim());
+        admin.setUserPhone(phone.trim());
+        admin.setUserAddress(address.trim());
 
-		if (updated) {
+        if (imagePath != null) {
+            admin.setUserImageURL(imagePath);
+        }
 
-			// session
-			SessionUtil.setAttribute(req, "user", admin);
+        // Update profile in database
+        boolean updated = dao.updateUserProfile(admin);
 
-			req.setAttribute("success", "Admin profile updated successfully.");
+        if (updated) {
 
-		} else {
-			req.setAttribute("error", "Admin profile update failed.");
-		}
+            // Update session with new admin data
+            SessionUtil.setAttribute(req, "user", admin);
 
-		req.setAttribute("admin", admin);
-		req.getRequestDispatcher("/WEB-INF/pages/adminprofile.jsp").forward(req, resp);
-	}
+            req.setAttribute("success", "Admin profile updated successfully.");
+
+        } else {
+            req.setAttribute("error", "Failed to update admin profile.");
+        }
+
+        req.setAttribute("admin", admin);
+        req.getRequestDispatcher("/WEB-INF/pages/adminprofile.jsp")
+           .forward(req, resp);
+    }
 }

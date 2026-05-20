@@ -11,31 +11,55 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * ProfileServlet handles user profile page access.
+ *
+ * This controller is responsible for:
+ * 1. Checking user login session
+ * 2. Restricting access for unauthenticated users
+ * 3. Redirecting admin users to dashboard
+ * 4. Displaying profile page for normal users
+ *
+ * URL: /profile
+ */
 @WebServlet("/profile")
 public class ProfileServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Handles HTTP GET request for user profile page.
+     *
+     * @param req  contains session data and request information
+     * @param resp sends response or redirects user
+     *
+     * @throws ServletException if servlet processing fails
+     * @throws IOException if input/output error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        // Get user from session using utility
+        // GET USER FROM SESSION
         UserModel user = (UserModel) SessionUtil.getAttribute(req, "user");
 
-        // If not logged in  redirect login
+        // REDIRECT IF NOT LOGGED IN
         if (user == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
 
-        // If admin  redirect dashboard
+        // REDIRECT ADMIN USERS TO DASHBOARD
         if ("admin".equalsIgnoreCase(user.getRole())) {
             resp.sendRedirect(req.getContextPath() + "/dashboard");
             return;
         }
 
-        // Pass user to JSP
+        // PASS USER DATA TO JSP PAGE
         req.setAttribute("user", user);
-        req.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(req, resp);
+
+        // FORWARD TO PROFILE VIEW PAGE
+        req.getRequestDispatcher("/WEB-INF/pages/profile.jsp")
+           .forward(req, resp);
     }
 }

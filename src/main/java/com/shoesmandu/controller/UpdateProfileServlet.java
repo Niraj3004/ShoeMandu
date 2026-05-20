@@ -17,21 +17,40 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
+/**
+ * UpdateProfileServlet handles updating user profile information.
+ *
+ * This servlet is responsible for:
+ * - Checking user session authentication
+ * - Preventing admin from accessing user profile update
+ * - Validating input fields
+ * - Handling profile image upload
+ * - Updating user data in database
+ * - Updating session after successful update
+ */
 @WebServlet("/UpdateProfile")
 @MultipartConfig
 public class UpdateProfileServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
+    // DAO object for updating user profile in database
     private UserProfileDAO dao = new UserProfileDAO();
 
+    /**
+     * Handles POST request for updating user profile
+     *
+     * @param req  contains form data (firstName, lastName, phone, address, image)
+     * @param resp sends response back to JSP page
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        // Get user from session using SessionUtil
+        // Get logged-in user from session
         UserModel user = (UserModel) SessionUtil.getAttribute(req, "user");
 
-        // Not logged in
+        // Check if user is logged in
         if (user == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
@@ -43,49 +62,55 @@ public class UpdateProfileServlet extends HttpServlet {
             return;
         }
 
+        // Get form input values
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         String phone = req.getParameter("phone");
         String address = req.getParameter("address");
 
+        // Get uploaded image
         Part filePart = req.getPart("image");
         String imagePath = null;
 
-        // Validation
-        if (ValidationUtil.isNullOrEmpty(firstName)
-                || ValidationUtil.isNullOrEmpty(lastName)
-                || ValidationUtil.isNullOrEmpty(phone)
-                || ValidationUtil.isNullOrEmpty(address)) {
+        // Validate required fields
+        if (ValidationUtil.isNullOrEmpty(firstName) ||
+            ValidationUtil.isNullOrEmpty(lastName) ||
+            ValidationUtil.isNullOrEmpty(phone) ||
+            ValidationUtil.isNullOrEmpty(address)) {
 
             req.setAttribute("error", "All fields are required");
             req.setAttribute("user", user);
-            req.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/pages/profile.jsp")
+               .forward(req, resp);
             return;
         }
 
+        // Validate phone number format
         if (!ValidationUtil.isValidPhone(phone)) {
-            req.setAttribute("error", "Please enter a valid 10-digit number.");
+
+            req.setAttribute("error", "Please enter a valid phone number");
             req.setAttribute("user", user);
-            req.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/pages/profile.jsp")
+               .forward(req, resp);
             return;
         }
 
-        // IMAGE UPLOAD
+        // Handle profile image upload (if provided)
+        if (filePart != null && filePart.getSize() > 0) {
 
-		if (filePart != null && filePart.getSize() > 0) {
+            ImageUtil imageUtil = new ImageUtil();
 
-			ImageUtil imageUtil = new ImageUtil(); // create object
+            String fileName = imageUtil.getImageNameFromPart(filePart);
 
-			String fileName = imageUtil.getImageNameFromPart(filePart);
+            String uploadPath = getServletContext().getRealPath("")
+                    + File.separator + "uploads";
 
-			String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+            imageUtil.uploadImage(filePart, uploadPath, "");
 
-			imageUtil.uploadImage(filePart, uploadPath, "");
+            imagePath = "uploads/" + fileName;
+        }
 
-			imagePath = "uploads/" + fileName;
-		}
-
-        // Update user object
+        // Update user object with new values
         user.setUserFirstName(firstName.trim());
         user.setUserLastName(lastName.trim());
         user.setUserPhone(phone.trim());
@@ -95,11 +120,12 @@ public class UpdateProfileServlet extends HttpServlet {
             user.setUserImageURL(imagePath);
         }
 
+        // Update user profile in database
         boolean updated = dao.updateUserProfile(user);
 
         if (updated) {
 
-            // session 
+            // Update session with new user data
             SessionUtil.setAttribute(req, "user", user);
 
             req.setAttribute("success", "Profile updated successfully.");
@@ -108,6 +134,7 @@ public class UpdateProfileServlet extends HttpServlet {
         }
 
         req.setAttribute("user", user);
-        req.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/pages/profile.jsp")
+           .forward(req, resp);
     }
 }
