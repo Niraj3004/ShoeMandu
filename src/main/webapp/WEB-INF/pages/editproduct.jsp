@@ -1,134 +1,118 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
-<!DOCTYPE html>
-<html>
-<head>
+    <!DOCTYPE html>
+    <html>
 
-<meta charset="UTF-8">
+    <head>
 
-<title>Edit Product</title>
+        <meta charset="UTF-8">
 
-<link rel="stylesheet"
-href="${pageContext.request.contextPath}/css/addproduct.css">
+        <title>Edit Product</title>
 
-</head>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/addproduct.css">
 
-<body>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<div class="container">
+    </head>
 
-    <div class="form-box">
+    <body>
 
-        <h1>Edit Product</h1>
+        <div class="container">
 
-        <form action="${pageContext.request.contextPath}/admin/edit-product"
-              method="post"
-              enctype="multipart/form-data">
+            <div class="form-box">
 
-            <input type="hidden"
-                   name="productId"
-                   value="${product.productId}">
+                <a href="${pageContext.request.contextPath}/dashboard" class="back-btn"> <i
+                        class="fa fa-arrow-left"></i> Back Dashboard
 
-            <div class="input-group">
+                </a>
 
-                <label>Product Name</label>
+                <h1>Edit Product</h1>
 
-                <input type="text"
-                       name="productName"
-                       value="${product.productName}"
-                       required>
+                <form action="${pageContext.request.contextPath}/admin/edit-product" method="post"
+                    enctype="multipart/form-data">
 
-            </div>
+                    <input type="hidden" name="productId" value="${product.productId}">
 
-            <div class="input-group">
+                    <div class="input-group">
 
-                <label>Brand</label>
+                        <label>Product Name</label>
 
-                <input type="text"
-                       name="brand"
-                       value="${product.brand}"
-                       required>
+                        <input type="text" name="productName" value="${product.productName}" required>
 
-            </div>
+                    </div>
 
-            <div class="input-group">
+                    <div class="input-group">
 
-                <label>Category</label>
+                        <label>Brand</label>
 
-                <input type="text"
-                       name="category"
-                       value="${product.category}"
-                       required>
+                        <input type="text" name="brand" value="${product.brand}" required>
 
-            </div>
+                    </div>
 
-            <div class="input-group">
+                    <div class="input-group">
 
-                <label>Description</label>
+                        <label>Category</label>
 
-                <textarea name="description"
-                          rows="5">${product.description}</textarea>
+                        <input type="text" name="category" value="${product.category}" required>
 
-            </div>
+                    </div>
 
-            <div class="double-input">
+                    <div class="input-group">
 
-                <div class="input-group">
+                        <label>Description</label>
 
-                    <label>Price</label>
+                        <textarea name="description" rows="5">${product.description}</textarea>
 
-                    <input type="number"
-                           step="0.01"
-                           name="price"
-                           value="${product.price}"
-                           required>
+                    </div>
 
-                </div>
+                    <div class="double-input">
 
-                <div class="input-group">
+                        <div class="input-group">
 
-                    <label>Stock</label>
+                            <label>Price</label>
 
-                    <input type="number"
-                           name="stock"
-                           value="${product.stock}"
-                           required>
+                            <input type="number" step="0.01" name="price" value="${product.price}" required>
 
-                </div>
+                        </div>
 
-            </div>
+                        <div class="input-group">
 
-            <div class="input-group">
+                            <label>Stock</label>
 
-                <label>Current Image</label>
+                            <input type="number" name="stock" value="${product.stock}" required>
 
-                <img src="${pageContext.request.contextPath}/${product.imageUrl}"
-                     width="120">
+                        </div>
 
-            </div>
+                    </div>
 
-            <div class="input-group">
+                    <div class="input-group">
 
-                <label>New Image</label>
+                        <label>Current Image</label>
 
-                <input type="file"
-                       name="image"
-                       accept="image/*">
+                        <img src="${pageContext.request.contextPath}/${product.imageUrl}" width="120">
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label>New Image</label>
+
+                        <input type="file" name="image" accept="image/*">
+
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+
+                        Update Product
+
+                    </button>
+
+                </form>
 
             </div>
 
-            <button type="submit"
-                    class="submit-btn">
+        </div>
 
-                Update Product
+    </body>
 
-            </button>
-
-        </form>
-
-    </div>
-
-</div>
-
-</body>
-</html>
+    </html>

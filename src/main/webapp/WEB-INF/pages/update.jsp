@@ -1,52 +1,56 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Update Profile</title>
+        <!DOCTYPE html>
+        <html>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+        <head>
+            <meta charset="UTF-8">
+            <title>Update Profile</title>
 
-</head>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+                rel="stylesheet">
 
-<body>
+        </head>
 
-<div class="form-box">
-    <h2>Update Profile</h2>
+        <body>
 
-    <form action="${pageContext.request.contextPath}/UpdateProfile" method="post" enctype="multipart/form-data">
+            <div class="form-box">
+                <h2>Update Profile</h2>
 
-        <!-- Hidden ID -->
-        <input type="hidden" name="userId" value="${user.userID}">
-        <input type="hidden" name="oldImage" value="${user.userImageURL}">
+                <form action="${pageContext.request.contextPath}/UpdateProfile" method="post"
+                    enctype="multipart/form-data">
 
-        <!-- Image Preview -->
-        <div class="preview">
-            <img src="${pageContext.request.contextPath}/${user.userImageURL}" />
-        </div>
+                    <!-- Hidden ID -->
+                    <input type="hidden" name="userId" value="${user.userID}">
+                    <input type="hidden" name="oldImage" value="${user.userImageURL}">
 
-        <!-- Upload -->
-        <label>Change Profile Image</label>
-        <input type="file" name="image">
+                    <!-- Image Preview -->
+                    <div class="preview">
+                        <img src="${pageContext.request.contextPath}/${user.userImageURL}" />
+                    </div>
 
-        <label>First Name</label>
-        <input type="text" name="firstName" value="${user.userFirstName}" required>
+                    <!-- Upload -->
+                    <label>Change Profile Image</label>
+                    <input type="file" name="image">
 
-        <label>Last Name</label>
-        <input type="text" name="lastName" value="${user.userLastName}" required>
+                    <label>First Name</label>
+                    <input type="text" name="firstName" value="${user.userFirstName}" required>
 
-        <label>Phone</label>
-        <input type="text" name="phone" value="${user.userPhone}" required>
+                    <label>Last Name</label>
+                    <input type="text" name="lastName" value="${user.userLastName}" required>
 
-        <label>Address</label>
-        <input type="text" name="address" value="${user.userAddress}" required>
+                    <label>Phone</label>
+                    <input type="text" name="phone" value="${user.userPhone}" required>
 
-        <button type="submit">Update Profile</button>
-    </form>
+                    <label>Address</label>
+                    <input type="text" name="address" value="${user.userAddress}" required>
 
-</div>
+                    <button type="submit">Update Profile</button>
+                </form>
 
-</body>
-</html>
+            </div>
+
+        </body>
+
+        </html>
