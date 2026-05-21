@@ -129,26 +129,26 @@
                                 alt="Ritesh">
                         </div>
                         <h3>Ritesh Sah</h3>
-                        <div class="member-position">Design</div>
+                        <div class="member-position">Fornt-End Design</div>
 
                     </div>
 
                     <div class="member-card">
                         <div class="member-photo">
-                            <img src="${pageContext.request.contextPath}/resources/images/about/Ritesh.jpeg" alt="">
+                            <img src="${pageContext.request.contextPath}/resources/images/about/prishma.jpg" alt="">
                         </div>
                         <h3>Prishma Dahal</h3>
-                        <div class="member-position">Design</div>
+                        <div class="member-position">Fornt-End Design</div>
 
                     </div>
 
                     <div class="member-card">
                         <div class="member-photo">
-                            <img src="${pageContext.request.contextPath}/resources/images/about/Ritesh.jpeg"
+                            <img src="${pageContext.request.contextPath}/resources/images/about/atulya.jpg"
                                 alt="Atulya">
                         </div>
                         <h3>Atulya</h3>
-                        <div class="member-position">Design</div>
+                        <div class="member-position">Fornt-End Design</div>
 
                     </div>
 
