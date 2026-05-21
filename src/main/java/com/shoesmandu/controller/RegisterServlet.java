@@ -18,132 +18,184 @@ import com.shoesmandu.util.ValidationUtil;
 /**
  * RegisterServlet handles user registration process.
  *
- * Responsibilities: 1. Display registration page 2. Process registration form
- * submission 3. Validate user input 4. Handle image upload 5. Register user
- * using service layer
+ * This controller is responsible for:
+ * - Loading registration page (GET request)
+ * - Processing registration form (POST request)
+ * - Validating user input
+ * - Handling profile image upload
+ * - Calling service layer to save user
  */
 @WebServlet("/register")
 @MultipartConfig
 public class RegisterServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	// Service layer object to handle business logic
-	private UserService userService = new UserService();
+    // Service layer object for user-related business logic
+    private UserService userService = new UserService();
 
-	/**
-	 * Handles HTTP GET request Loads the registration page
-	 *
-	 * @param req  HttpServletRequest object containing client request
-	 * @param resp HttpServletResponse object used to send response
-	 * 
-	 * @throws ServletException if servlet-specific error occurs
-	 * @throws IOException      if input/output error occurs
-	 *
-	 * @return void (forwards to register.jsp)
-	 */
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    /**
+     * Handles GET request
+     * Loads the registration page (register.jsp)
+     */
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-		// Forward request to register page
-		req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
-	}
+        req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+           .forward(req, resp);
+    }
 
-	/**
-	 * Handles HTTP POST request Processes user registration form submission
-	 *
-	 * @param req  HttpServletRequest object containing form data
-	 * @param resp HttpServletResponse object used for redirect/forward
-	 * 
-	 * @throws ServletException if servlet-specific error occurs
-	 * @throws IOException      if input/output error occurs
-	 *
-	 * @return void (redirects or forwards based on registration result)
-	 */
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    /**
+     * Handles POST request
+     * Processes user registration form submission
+     *
+     * @param req  contains form data (first_name, last_name, email, etc.)
+     * @param resp sends response back to browser (redirect or forward)
+     */
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-		// Get form data from request
-		String firstName = req.getParameter("first_name");
-		String lastName = req.getParameter("last_name");
-		String email = req.getParameter("email");
-		String phone = req.getParameter("phone");
-		String password = req.getParameter("password");
-		String address = req.getParameter("address");
+        // Get form data from request
+        String firstName = req.getParameter("first_name");
+        String lastName = req.getParameter("last_name");
+        String email = req.getParameter("email");
+        String phone = req.getParameter("phone");
+        String password = req.getParameter("password");
+        String address = req.getParameter("address");
 
-		// Get uploaded image file
-		Part filePart = req.getPart("image");
-		String imagePath = null;
+        // Get uploaded profile image
+        Part filePart = req.getPart("image");
+        String imagePath = null;
 
-		// Validate empty fields
-		if (ValidationUtil.isNullOrEmpty(firstName) || ValidationUtil.isNullOrEmpty(lastName)
-				|| ValidationUtil.isNullOrEmpty(email) || ValidationUtil.isNullOrEmpty(phone)
-				|| ValidationUtil.isNullOrEmpty(password)) {
+     // Validate First Name
+        if (ValidationUtil.isNullOrEmpty(firstName)) {
+            req.setAttribute("error", "First name is required");
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+               .forward(req, resp);
+            return;
+        }
 
-			req.setAttribute("error", "All fields are required");
+        // Validate Last Name
+        if (ValidationUtil.isNullOrEmpty(lastName)) {
+            req.setAttribute("error", "Last name is required");
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+               .forward(req, resp);
+            return;
+        }
+
+        // Validate Email
+        if (ValidationUtil.isNullOrEmpty(email)) {
+            req.setAttribute("error", "Email is required");
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+               .forward(req, resp);
+            return;
+        }
+
+        // Validate Phone Number
+        if (ValidationUtil.isNullOrEmpty(phone)) {
+            req.setAttribute("error", "Phone number is required");
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+               .forward(req, resp);
+            return;
+        }
+
+        // Validate Password
+        if (ValidationUtil.isNullOrEmpty(password)) {
+            req.setAttribute("error", "Password is required");
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+               .forward(req, resp);
+            return;
+        }
+
+        // Validate email format
+        if (!ValidationUtil.isValidEmail(email)) {
+            req.setAttribute("error", "Please enter a valid email address");
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+               .forward(req, resp);
+            return;
+        }
+
+        // Validate phone number format
+        if (!ValidationUtil.isValidPhone(phone)) {
+            req.setAttribute("error", "Please enter a valid phone number");
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+               .forward(req, resp);
+            return;
+        }
+        
+     // Check if email already exists
+        if (userService.isEmailExists(email)) {
+
+            req.setAttribute("error", "Email already exists");
+
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+               .forward(req, resp);
+
+            return;
+        }
+        
+        // Validate password strength
+        if (!ValidationUtil.isValidPassword(password)) {
+            req.setAttribute("error",
+                    "Password must be 8+ chars with uppercase, number, and special character");
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+               .forward(req, resp);
+            return;
+        }
+        
+		// Handle image
+
+		if (filePart == null || filePart.getSize() == 0) {
+
+			req.setAttribute("error", "Please select a profile image");
 
 			req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
 			return;
 		}
 
-		// Validate email format
-		if (!ValidationUtil.isValidEmail(email)) {
+		// Get file name
+		String fileName = filePart.getSubmittedFileName();
 
-			req.setAttribute("error", "Please enter a valid email address. example@gmail.com");
+		// Convert to lowercase for safe checking
+		String lowerName = fileName.toLowerCase();
 
-			req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
-			return;
-		}
+		// Validate image format
+		if (!(lowerName.endsWith(".jpg") || lowerName.endsWith(".jpeg") || lowerName.endsWith(".png")
+				|| lowerName.endsWith(".webp"))) {
 
-		// Validate phone number
-		if (!ValidationUtil.isValidPhone(phone)) {
-
-			req.setAttribute("error", "Please enter a valid 10-digit number.");
+			req.setAttribute("error", "Only JPG, JPEG, PNG, or WEBP images are allowed");
 
 			req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
 			return;
 		}
 
-		// Validate password strength
-		if (!ValidationUtil.isValidPassword(password)) {
+		// Upload path
+		ImageUtil imageUtil = new ImageUtil();
 
-			req.setAttribute("error",
-					"Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
+		String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
 
-			req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
-			return;
-		}
+		// Upload image
+		imageUtil.uploadImage(filePart, uploadPath, "");
 
-		// Handle image upload
-		if (filePart != null && filePart.getSize() > 0) {
+		// Save DB path
+		imagePath = "uploads/" + fileName;
 
-			ImageUtil imageUtil = new ImageUtil();
+        try {
+            // Call service layer to register user
+            userService.addUser(firstName, lastName, email, password, phone, address, imagePath);
 
-			String fileName = imageUtil.getImageNameFromPart(filePart);
+            // Redirect to login page after successful registration
+            resp.sendRedirect(req.getContextPath() + "/login?success=registered");
 
-			String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+        } catch (Exception e) {
+            e.printStackTrace();
 
-			imageUtil.uploadImage(filePart, uploadPath, "");
-
-			imagePath = "uploads/" + fileName;
-		}
-
-		try {
-
-			// Call service layer to register user
-			userService.addUser(firstName, lastName, email, password, phone, address, imagePath);
-
-			// Redirect to login page after success
-			resp.sendRedirect(req.getContextPath() + "/login?success=registered");
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-			// Handle registration failure
-			req.setAttribute("error", "Registration failed. Email already exist.");
-
-			req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
-		}
-	}
+            // Handle failure (e.g., duplicate email or DB error)
+            req.setAttribute("error", "Registration faileds.");
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+               .forward(req, resp);
+        }
+    }
 }

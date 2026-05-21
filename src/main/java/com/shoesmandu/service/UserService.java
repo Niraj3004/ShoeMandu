@@ -54,4 +54,8 @@ public class UserService {
         userDAO.insertUser(firstName, lastName, email, hashedPassword,
                 phone, address, role, status, image);
     }
+    
+    public boolean isEmailExists(String email) {
+        return userDAO.isEmailExists(email);
+    }
 }

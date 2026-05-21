@@ -20,6 +20,8 @@ import com.shoesmandu.util.DBconfig;
  * 
  * This DAO interacts with the user table
  * in the database.
+ * 
+ * @author Nikhil Sah
  */
 public class UserDAO {
 
@@ -160,4 +162,24 @@ public class UserDAO {
 
 		return users;
 	}
+	
+	 public boolean isEmailExists(String email) {
+
+		    String query = "SELECT * FROM user WHERE user_email = ?";
+
+		    try (Connection conn = DBconfig.getConnection();
+		         PreparedStatement ps = conn.prepareStatement(query)) {
+
+		        ps.setString(1, email);
+
+		        ResultSet rs = ps.executeQuery();
+
+		        return rs.next();
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+
+		    return false;
+		}
 }

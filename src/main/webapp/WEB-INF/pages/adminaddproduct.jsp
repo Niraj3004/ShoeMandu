@@ -20,6 +20,37 @@
 
         <body>
 
+            <aside class="sidebar">
+                <h2>ShoesMandu</h2>
+
+                <a href="${pageContext.request.contextPath}/dashboard" class="active">
+                    <i class="fa fa-chart-line"></i> Dashboard
+                </a>
+
+                <a href="${pageContext.request.contextPath}/admin-manageproduct">
+                    <i class="fa fa-box"></i> Products
+                </a>
+
+                <a href="${pageContext.request.contextPath}/adminadd-product">
+                    <i class="fa fa-plus"></i> Add Product
+                </a>
+
+                <a href="${pageContext.request.contextPath}/admin/orders">
+                    <i class="fa fa-receipt"></i> Orders
+                </a>
+
+                <a href="${pageContext.request.contextPath}/admin-profile">
+                    <i class="fa fa-user"></i> Profile
+                </a>
+
+                <a href="${pageContext.request.contextPath}/logout">
+                    <i class="fa fa-sign-out-alt"></i> Logout
+                </a>
+            </aside>
+
+
+
+
             <div class="container">
 
                 <div class="form-box">
@@ -64,10 +95,11 @@
 
                                 <option value="">Select Category</option>
 
-                                <option value="Sneakers">Sneakers</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Casual">Casual</option>
-                                <option value="Formal">Formal</option>
+                                <option value="">Select Category</option>
+                                <option value="Men">Men</option>
+                                <option value="Women">Women</option>
+                                <option value="Kids">Kids</option>
+                                <option value="Unisex">Unisex</option>
 
                             </select>
 
